@@ -22,15 +22,13 @@
     <div id="app">
         <div class="top-menu">
             <div class="top-menu-navigation">
-                <ul class="top-menu-navigation">
-                    <a href=" {{route('sobre')}}">Sobre</a>
-                    <a href="{{route('suporte')}}">Suporte e garantia</a>
-                    <a href="{{route('blog')}}">Blog</a>
-                    <a href="{{route('eventos')}}">Eventos</a>
-                    <a href="{{route('ondeComprar')}}">Onde Comprar</a>
-                    <a href="{{route('contato')}}">Fale conosco</a>
-                    <a href="{{route('registroBike')}}">Registre sua bike</a>
-                </ul>
+                <a href=" {{route('sobre')}}">Sobre</a>
+                <a href="{{route('suporte')}}">Suporte e garantia</a>
+                <a href="{{route('blog')}}">Blog</a>
+                <a href="{{route('eventos')}}">Eventos</a>
+                <a href="{{route('ondeComprar')}}">Onde Comprar</a>
+                <a href="{{route('contato')}}">Fale conosco</a>
+                <a href="{{route('registroBike')}}">Registre sua bike</a>
 
             </div>
             <div class="top-menu-social-midia">
@@ -41,7 +39,9 @@
         </div>
         <nav class="navbar navbar-expand-md">
             <div class="container">
-                <img src="{{ asset('img/logo.png') }}" alt="" class="nav-brand">
+                <a href="{{route('home')}}">
+                    <img src="{{ asset('img/logo.png') }}" alt="" class="nav-brand">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -70,7 +70,7 @@
                 </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>
