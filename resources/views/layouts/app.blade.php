@@ -73,6 +73,23 @@
         <main>
             @yield('content')
         </main>
+        <footer>
+            <div class="footer-navigation">
+                <a href=" {{route('sobre')}}">Sobre</a>
+                <a href=" {{route('suporte')}}">Suporte e garantia</a>
+                <a href=" {{route('ondeComprar')}}">onde comprar</a>
+                <a href=" {{route('registroBike')}}">registre sua bike</a>
+            </div>
+            <div class="footer-social">
+                <i class="bi bi-facebook"></i>
+                <i class="bi bi-instagram"></i>
+                <i class="bi bi-whatsapp"></i>
+            </div>
+            <div class="footer-span">
+                <span> &copy2022 - goodnine| todos os direitos reservados - desenvolvido por </span>
+            </div>
+
+        </footer>
     </div>
 </body>
 

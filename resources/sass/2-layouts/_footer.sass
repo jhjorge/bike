@@ -1,0 +1,37 @@
+@use '../1-base/_variables'
+@import '../3-modules/_mixins'
+
+footer
+    background-image: url('../../../public/img/folter.jpg')
+    @include center-img()
+    height: 150px
+    justify-content: space-between
+    display: flex
+    flex-direction: column
+
+.footer-navigation
+    justify-content: center
+    text-align: center
+    padding-top: 8px
+    a
+        padding: 0 8px
+        font-size: 1rem
+        color: #fff
+        text-transform: uppercase
+        font-weight: bold
+
+.footer-social
+    justify-content: center
+    text-align: center
+    i
+        padding: 8px
+        color: variables.$primary-color
+        font-size: 2rem
+        font-weight: 700
+
+.footer-span
+    justify-content: ceneter
+    text-align: center
+    span
+        color: #fff
+        text-transform: uppercase

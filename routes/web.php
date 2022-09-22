@@ -23,4 +23,4 @@ Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name
 Route::get('/eventos', [App\Http\Controllers\EventosController::class, 'index'])->name('eventos');
 Route::get('/ondecomprar', [App\Http\Controllers\OndeComprarController::class, 'index'])->name('ondeComprar');
 Route::get('/faleconosco', [App\Http\Controllers\ContatoController::class, 'index'])->name('contato');
-Route::get('/registresuabike', [App\Http\Controllers\RegistroBikeHomeController::class, 'index'])->name('registroBike');
+Route::get('/registresuabike', [App\Http\Controllers\RegistroBikeController::class, 'index'])->name('registroBike');
