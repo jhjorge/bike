@@ -1,0 +1,175 @@
+.top-menu {
+  background-color: #b3b3b3;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.top-menu-navigation {
+  justify-contentc: center;
+}
+.top-menu-navigation a {
+  text-transform: uppercase;
+  text-weight: bold;
+  padding-right: 0.8rem;
+  font-size: 1rem;
+  text-align: end;
+}
+.top-menu-social-midia i {
+  font-size: 1.3rem;
+  padding-right: 0.4rem;
+}
+
+.navbar {
+  aling-itens: center;
+  justify-items: center;
+  background-color: #191919;
+  height: 100px;
+}
+
+.nav-brand {
+  max-width: 250px;
+}
+
+.navigation {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.banner-container img {
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+
+.call-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.call-container-content {
+  padding: 8px;
+  justify-content: center;
+  align-content: center;
+}
+.call-container-content img {
+  margin: 8px;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #191919;
+  padding: 8px;
+  margin-top: 8px;
+  height: 400px;
+}
+.gallery-container-top, .gallery-container h2 {
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.gallery-container-top-nav, .gallery-container h2-nav {
+  display: flex;
+  justify-content: space-between;
+}
+.gallery-container-top-nav h3, .gallery-container h2-nav h3 {
+  margin: 8px;
+  background-color: #dd1e2f;
+  color: #fff;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.gallery-container-top-nav h3:hover, .gallery-container h2-nav h3:hover {
+  color: #b3b3b3;
+  background-color: #dd1e2f;
+}
+
+footer {
+  background-image: url("../../../public/img/folter.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 150px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-navigation {
+  justify-content: center;
+  text-align: center;
+  padding-top: 8px;
+}
+.footer-navigation a {
+  padding: 0 8px;
+  font-size: 1rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.footer-social {
+  justify-content: center;
+  text-align: center;
+}
+.footer-social i {
+  padding: 8px;
+  color: #191919;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.footer-span {
+  justify-content: ceneter;
+  text-align: center;
+}
+.footer-span span {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.text-information {
+  justify-content: center;
+  display: flex;
+}
+.text-information div {
+  display: flex;
+  max-width: 800px;
+  margin: 8px 0;
+  justify-content: center;
+}
+.text-information div p {
+  text-align: end;
+  padding-left: 40px;
+  padding-bottom: 0;
+  margin-top: 40px;
+}
+
+.video-content {
+  margin: 40px 0;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+}
+
+.sobre-content {
+  padding: 40px 0;
+  margin: 8px 0;
+  height: 400px;
+  background-image: url("../../../public/img/sobre-section.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.sobre-content-text {
+  align-content: center;
+}
+.sobre-content-text div h2 {
+  color: #dd1e2f;
+  font-size: 3rem;
+  font-weight: bold;
+}
+.sobre-content-text div p {
+  bottom: 1px;
+}/*# sourceMappingURL=layouts.css.map */

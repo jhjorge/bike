@@ -13,6 +13,6 @@ class SobreController extends Controller
      */
     public function index()
     {
-        return 'Sobre';
+        return view('app/sobre');
     }
 }
