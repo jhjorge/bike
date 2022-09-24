@@ -13,6 +13,6 @@ class OndeComprarController extends Controller
      */
     public function index()
     {
-        return 'onde comprar';
+        return view('app/onde');
     }
 }
