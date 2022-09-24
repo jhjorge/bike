@@ -13,6 +13,6 @@ class SuporteController extends Controller
      */
     public function index()
     {
-        return 'Suporte e garantia';
+        return view('app/suporte');
     }
 }
