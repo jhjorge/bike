@@ -20,7 +20,10 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/sobre', [App\Http\Controllers\SobreController::class, 'index'])->name('sobre');
 Route::get('/suporteegarantia', [App\Http\Controllers\SuporteController::class, 'index'])->name('suporte');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
-Route::get('/eventos', [App\Http\Controllers\EventosController::class, 'index'])->name('eventos');
+Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'post'])->name('blogPost');
+Route::get('/eventos', function () {
+    return view('app.eventos');
+})->name('eventos');
 Route::get('/ondecomprar', [App\Http\Controllers\OndeComprarController::class, 'index'])->name('ondeComprar');
 Route::get('/faleconosco', [App\Http\Controllers\ContatoController::class, 'index'])->name('contato');
 Route::get('/registresuabike', [App\Http\Controllers\RegistroBikeController::class, 'index'])->name('registroBike');

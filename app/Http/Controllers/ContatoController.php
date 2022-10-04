@@ -13,6 +13,6 @@ class ContatoController extends Controller
      */
     public function index()
     {
-        return 'faleconosco';
+        return view('app.contato');
     }
 }

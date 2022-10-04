@@ -13,6 +13,6 @@ class RegistroBikeController extends Controller
      */
     public function index()
     {
-        return 'Registre sua bike';
+        return view('app.registre');
     }
 }

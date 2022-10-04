@@ -6,13 +6,13 @@
 <div class="banner-container">
     <img src="{{ asset('img/banner.jpg') }}" alt="foto de uma bicicleta">
 </div>
-<div class="call-container">
+<div class="call-container my-4">
     <div class="call-container-content">
         <img src="{{ asset('img/blog.jpg') }}" alt="">
         <img src="{{ asset('img/eventos.jpg') }}" alt="">
     </div>
 </div>
-<div class="gallery-container">
+<div class="gallery-container my-4">
     <div class="gallery-container-top">
         <h2>
             Conheça nossos produtos
@@ -26,7 +26,7 @@
     </div>
 </div>
 <section>
-    <div class="call-container">
+    <div class="call-container my-4">
         <div class="call-container-content">
             <img src="{{ asset('img/onde.jpg') }}" alt="">
             <img src="{{ asset('img/registre.jpg') }}" alt="">

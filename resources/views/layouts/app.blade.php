@@ -20,18 +20,18 @@
 
 <body>
     <div id="app">
-        <div class="top-menu">
-            <div class="top-menu-navigation">
-                <a href=" {{route('sobre')}}">Sobre</a>
-                <a href="{{route('suporte')}}">Suporte e garantia</a>
-                <a href="{{route('blog')}}">Blog</a>
-                <a href="{{route('eventos')}}">Eventos</a>
-                <a href="{{route('ondeComprar')}}">Onde Comprar</a>
-                <a href="{{route('contato')}}">Fale conosco</a>
-                <a href="{{route('registroBike')}}">Registre sua bike</a>
+        <div class="mx-auto top-menu jusitfy-content-center">
+            <div class=" jusitfy-content-center top-menu-navigation">
+                <a href=" {{ route('sobre') }}">Sobre</a>
+                <a href="{{ route('suporte') }}">Suporte e garantia</a>
+                <a href="{{ route('blog') }}">Blog</a>
+                <a href="{{ route('eventos') }}">Eventos</a>
+                <a href="{{ route('ondeComprar') }}">Onde Comprar</a>
+                <a href="{{ route('contato') }}">Fale conosco</a>
+                <a href="{{ route('registroBike') }}">Registre sua bike</a>
 
             </div>
-            <div class="top-menu-social-midia">
+            <div class="d-flex justify-content center top-menu-social-midia">
                 <i class="bi bi-facebook"></i>
                 <i class="bi bi-instagram"></i>
                 <i class="bi bi-whatsapp"></i>
@@ -39,7 +39,7 @@
         </div>
         <nav class="navbar navbar-expand-md">
             <div class="container">
-                <a href="{{route('home')}}">
+                <a href="{{ route('home') }}">
                     <img src="{{ asset('img/logo.png') }}" alt="" class="nav-brand">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -59,13 +59,16 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto search">
-                        <div class="input-group rounded">
-                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                                aria-describedby="search-addon" />
-                            <span class="input-group-text border-0" id="search-addon">
-                                <i class="fas fa-search"></i>
-                            </span>
-                        </div>
+                        <form action="" method="get">
+                            @{% csrf_token %}
+                            <div class="input-group rounded">
+                                <input type="search" name="search-post" class="form-control rounded"
+                                    placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <span class="input-group-text border-0" id="search-addon">
+                                    <button class="border-0 mx-0 my-0"><i class="bi bi-search"></i></button>
+                                </span>
+                            </div>
+                        </form>
 
                 </div>
         </nav>
@@ -75,10 +78,10 @@
         </main>
         <footer>
             <div class="footer-navigation">
-                <a href=" {{route('sobre')}}">Sobre</a>
-                <a href=" {{route('suporte')}}">Suporte e garantia</a>
-                <a href=" {{route('ondeComprar')}}">onde comprar</a>
-                <a href=" {{route('registroBike')}}">registre sua bike</a>
+                <a href=" {{ route('sobre') }}">Sobre</a>
+                <a href=" {{ route('suporte') }}">Suporte e garantia</a>
+                <a href=" {{ route('ondeComprar') }}">onde comprar</a>
+                <a href=" {{ route('registroBike') }}">registre sua bike</a>
             </div>
             <div class="footer-social">
                 <i class="bi bi-facebook"></i>

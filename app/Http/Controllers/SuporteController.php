@@ -13,6 +13,6 @@ class SuporteController extends Controller
      */
     public function index()
     {
-        return view('app/suporte');
+        return view('app.suporte');
     }
 }
