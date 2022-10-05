@@ -23,8 +23,6 @@
             @endforelse
 
         </div>
-        @if (request()->input('search-post'))
-            {{ $posts->appends(['search-post' => request()->input('search-post')])->links() }}
-        @endif
+
     </div>
 @endsection

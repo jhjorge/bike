@@ -21,9 +21,10 @@ Route::get('/sobre', [App\Http\Controllers\SobreController::class, 'index'])->na
 Route::get('/suporteegarantia', [App\Http\Controllers\SuporteController::class, 'index'])->name('suporte');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'post'])->name('blogPost');
-Route::get('/eventos', function () {
-    return view('app.eventos');
-})->name('eventos');
+
+Route::get('/eventos', [App\Http\Controllers\EventoController::class, 'index'])->name('eventos');
+Route::get('/evento/{id}', [App\Http\Controllers\EventoController::class, 'show'])->name('evento');
+
 Route::get('/ondecomprar', [App\Http\Controllers\OndeComprarController::class, 'index'])->name('ondeComprar');
 Route::get('/faleconosco', [App\Http\Controllers\ContatoController::class, 'index'])->name('contato');
 Route::get('/registresuabike', [App\Http\Controllers\RegistroBikeController::class, 'index'])->name('registroBike');

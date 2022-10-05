@@ -20,8 +20,8 @@
 
 <body>
     <div id="app">
-        <div class="mx-auto top-menu jusitfy-content-center">
-            <div class=" jusitfy-content-center top-menu-navigation">
+        <div class=" ms-auto top-menu jusitfy-content-center">
+            <div class="  top-menu-navigation">
                 <a href=" {{ route('sobre') }}">Sobre</a>
                 <a href="{{ route('suporte') }}">Suporte e garantia</a>
                 <a href="{{ route('blog') }}">Blog</a>
@@ -60,7 +60,6 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto search">
                         <form action="" method="get">
-                            @{% csrf_token %}
                             <div class="input-group rounded">
                                 <input type="search" name="search-post" class="form-control rounded"
                                     placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
