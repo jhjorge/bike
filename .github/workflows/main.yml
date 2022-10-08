@@ -1,28 +1,32 @@
-name: Laravel Rsync Deploy
-
+name: Build and Deploy
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            -   master
 
 jobs:
-  laravel-rsync-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: MilesChou/composer-action/7.3/install@master
-      - run: |
-          cp .env.example .env
-          php artisan key:generate --ansi
-
-      - name: Pull Docker image
-        run: |
-          docker pull "node:lts-slim"
-          npm install && npm run production
-
-      - name: Laravel Rsync Deploy
-        uses: SHSharkar/Laravel-Rsync-Deploy@master
+    build:
+        name: Build and Deploy
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@master
+            -   name: Setup Enviroment
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+            -   name: Speed up the packages installation process
+                run: composer global require hirak/prestissimo
+            -   name: Install Packages
+                run: composer install --no-dev
+            -   name: Deploy to Server
+                uses: ngocquyhoang/deploy@laravel
+                with:
+                    user: user
+                    host: host
+                    port: port
+                    path: path
+                    owner: owner
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "--ignore-times --compress --verbose --exclude=.git --exclude=.github --exclude=node_modules --no-perms --no-owner --no-group --recursive"
