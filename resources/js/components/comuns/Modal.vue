@@ -22,6 +22,7 @@
             ></button>
           </div>
           <div class="modal-body">
+            <slot name="alertText"></slot>
             <slot name="conteudo"> </slot>
           </div>
           <slot name="footerModal"></slot>

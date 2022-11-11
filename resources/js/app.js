@@ -37,7 +37,8 @@ import Eventos from './components/layouts/Eventos.vue';
 app.component('eventos-component', Eventos);
 import Modal from './components/comuns/Modal.vue';
 app.component('modal-component', Modal);
-
+import AlertMsg from './components/comuns/AlertMsg.vue';
+app.component('alert-component', AlertMsg);
 
 
 /**

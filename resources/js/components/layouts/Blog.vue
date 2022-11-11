@@ -2,9 +2,23 @@
   <div>
     <div class="container my-4">
       <div class="row my-4">
-        <h1 class="h1 col-md-10 my-2">Blog</h1>
-        <div class="col-md-2">
+        <h1 class="h1 col-md-8 my-2">Blog</h1>
+        <div class="col-md-4">
           <modal-component id="modalBlog" titulo="Adicionar Post">
+            <template v-slot:alertText>
+              <alert-component
+                titleText="Erro ao tentar cadastrar o Post"
+                :msg="fetchDetails"
+                tipo="danger"
+                v-if="fetchStatus == 'erro'"
+              ></alert-component>
+              <alert-component
+                titleText="Post Criado!"
+                :msg="fetchDetails"
+                tipo="success"
+                v-if="fetchStatus == 'criado'"
+              ></alert-component>
+            </template>
             <template v-slot:conteudo>
               <div class="mb-3">
                 <label for="tituloPostModal" class="form-label"
@@ -64,9 +78,12 @@
               </div>
             </template>
           </modal-component>
+          <button type="button" class="btn btn-primary" @click="loadList">
+            Carregar Posts
+          </button>
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn mx-1 btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#modalBlog"
           >
@@ -100,7 +117,7 @@
                 <tr v-for="post in posts" :key="post.id">
                   <th>{{ post.id }}</th>
                   <td>{{ post.title }}</td>
-                  <td>{{ post.thumb }}</td>
+                  <td><img :src="'/storage/' + post.thumb" /></td>
                   <td>{{ post.slug }}</td>
                   <td>{{ formatDate(post.created_at) }}</td>
                   <td></td>
@@ -117,6 +134,7 @@
   
   <script>
 import Modal from "../comuns/Modal.vue";
+
 export default {
   name: "Blog",
   component: { Modal },
@@ -130,6 +148,8 @@ export default {
     slugPost: null,
     conteudoPost: null,
     imagemPost: [],
+    fetchStatus: null,
+    fetchDetails: null,
   }),
 
   methods: {
@@ -149,11 +169,26 @@ export default {
       axios
         .post(this.urlPosts, formData, config)
         .then((response) => {
-          console.log(response);
+          this.fetchStatus = "criado";
+          this.fetchDetails = response;
         })
         .catch((erros) => {
-          console.log(erros);
+          this.fetchStatus = "erro";
+          this.fetchDetails = erros.response;
         });
+    },
+
+    loadList() {
+      axios
+        .get(this.urlPosts)
+        .then((response) => {
+          this.posts = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
     },
     carregarImg(e) {
       this.imagemPost = e.target.files;
@@ -164,7 +199,6 @@ export default {
     },
     formatDate(dateString) {
       const date = new Date(dateString);
-      // Then specify how you want your dates to be formatted
       return new Intl.DateTimeFormat("default", { dateStyle: "short" }).format(
         date
       );
