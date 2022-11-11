@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/painel', [App\Http\Controllers\PainelController::class, 'index'])->name('painel');
 Route::get('/sobre', [App\Http\Controllers\SobreController::class, 'index'])->name('sobre');
 Route::get('/suporteegarantia', [App\Http\Controllers\SuporteController::class, 'index'])->name('suporte');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');

@@ -7,6 +7,10 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
+// Import Bootstrap and BootstrapVue CSS files (order is important)
+
+
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -19,8 +23,21 @@ import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
 import Login from './components/Login.vue';
 app.component('login-component', Login);
-import Blog from './components/Blog.vue';
-app.component('blog-cards', Blog);
+import Painel from './components/Painel.vue';
+app.component('painel-component', Painel);
+import Menu from './components/comuns/Menu.vue';
+app.component('menu-component', Menu);
+import Home from './components/layouts/Home.vue';
+app.component('home-component', Home);
+import Produtos from './components/layouts/Produtos.vue';
+app.component('produtos-component', Produtos);
+import Blog from './components/layouts/Blog.vue';
+app.component('posts-component', Blog);
+import Eventos from './components/layouts/Eventos.vue';
+app.component('eventos-component', Eventos);
+import Modal from './components/comuns/Modal.vue';
+app.component('modal-component', Modal);
+
 
 
 /**

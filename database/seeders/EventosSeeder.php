@@ -15,6 +15,6 @@ class EventosSeeder extends Seeder
      */
     public function run()
     {
-        Eventos::factory(20)->create();
+        Eventos::factory(2)->create();
     }
 }

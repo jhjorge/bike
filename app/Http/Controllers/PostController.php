@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -21,28 +22,9 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $post = array();
 
-        if ($request->has('atributos_user')) {
-            $atributos_user = $request->atributos_user;
-            $post = $this->post->with('user:id,' . $atributos_user);
-        } else {
-            $post = $this->post->with('user');
-        }
-        if ($request->has('filtro')) {
-            $filtros = explode(';', $request->filtro);
-            foreach ($filtros as $key => $condicao) {
-                $c = explode(':', $condicao);
-                $post = $post->where($c[0], $c[1], $c[2]);
-            }
-        }
-        if ($request->has('atributos')) {
-            $atributos = $request->atributos;
-            $post = $post->selectRaw($atributos)->get();
-        } else {
-            $post = $post->get();
-        }
-        //$eventos = $this->eventos->with('users')->get();
+        $post = Post::limit(9)->orderby('id', 'desc')->get();
+
         return response()->json($post, 200);
     }
 
@@ -60,7 +42,15 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $post = $this->post->create($request->all());
+        $image = $request->file('thumb');
+        $imagen_urn = $image->store('imagens', 'public');
+
+        $post = $this->post->create([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'content' => $request->content,
+            'thumb' => $imagen_urn,
+        ]);
         return response()->json($post, 201);
     }
 
@@ -95,7 +85,19 @@ class PostController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a alteração. O recurso solicitado não existe'], 404);
         } else {
 
-            $post->update($request->all());
+            if ($request->file('thumb')) {
+                Storage::disk('public')->delete($post->thumb);
+            }
+            $image = $request->file('thumb');
+            $imagen_urn = $image->store('imagens', 'public');
+
+            $post->update([
+                'title' => $request->title,
+                'slug' => $request->slug,
+                'content' => $request->content,
+                'thumb' => $imagen_urn,
+
+            ]);
             return response()->json($post, 200);
         }
     }
@@ -106,12 +108,14 @@ class PostController extends Controller
      * @param  integer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,)
     { {
             $post = $this->post->find($id);
             if ($post === null) {
                 return response()->json(['erro' => 'Impossivel realizar a exclusão. O recurso solicitado não existe'], 404);
             } else {
+                Storage::disk('public')->delete($post->thumb);
+
                 $post->delete();
                 return response()->json(['msg' => 'A post removido com sucesso!'], 200);
             }
