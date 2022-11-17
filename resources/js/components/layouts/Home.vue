@@ -20,7 +20,7 @@ export default {
     },
   },
   data: () => ({
-    urlProdutos: "http://localhost:8000/api/posts",
+    urlProdutos: "https://goodnine.com.br/api/posts",
     produtos: [""],
     loading: true,
     errored: false,

@@ -49,7 +49,7 @@
 export default {
   name: "eventos",
   data: () => ({
-    urlEventos: "http://localhost:8000/api/eventos",
+    urlEventos: "https://goodnine.com.br/api/eventos",
     evento: [],
     loading: true,
     errored: false,
