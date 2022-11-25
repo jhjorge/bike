@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('content');
             $table->string('thumb');
             $table->string('gallery');
-            $table->string('slug');
             $table->timestamps();
         });
     }

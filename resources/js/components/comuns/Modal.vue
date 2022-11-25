@@ -33,6 +33,6 @@
 </template>
 <script>
 export default {
-  props: ["id", "titulo"],
+  props: ["id", "titulo", "objInfo"],
 };
 </script>

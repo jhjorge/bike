@@ -21,7 +21,6 @@ class EventosFactory extends Factory
             'title' => fake()->sentence(3),
             'locale' => fake()->region(),
             'date' => fake()->date(),
-            'slug' => Str::slug(fake()->sentence(3)),
             'content' => fake()->paragraph(),
             'gallery' => fake()->imageUrl(),
             'thumb' => fake()->imageUrl(),

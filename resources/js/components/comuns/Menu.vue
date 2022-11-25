@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <nav class="navbar sticky-top" style="background-color: #b3b3b3">
-      <div class="container-fluid">
-        <a class="navbar-brand font-weight-2" @click.stop.prevent="emitClick(0)"
+  <div class="py-2" style="background-color: #b3b3b3">
+    <nav class="container navbar text-end sticky-top">
+      <div class="col-3"></div>
+      <div class="col-md-5 col-sm">
+        <a
+          class="navbar-brand font-weight-bold text-capitalize"
+          @click.stop.prevent="emitClick(0)"
           >Painel Administrativo</a
         >
         <button
@@ -46,17 +49,6 @@
                 >
               </li>
             </ul>
-            <form class="d-flex mt-3" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
           </div>
         </div>
       </div>
@@ -67,7 +59,7 @@
 export default {
   name: "Menu",
   components: {},
-  props: ["items"],
+  props: ["items", "titulo"],
   data: () => ({}),
   methods: {
     emitClick(link) {

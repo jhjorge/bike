@@ -22,10 +22,23 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
+        $posts = array();
 
-        $post = Post::limit(9)->orderby('id', 'desc')->get();
 
-        return response()->json($post, 200);
+
+        if ($request->has('filtro')) {
+            $filtros = explode(';', $request->filtro);
+
+            foreach ($filtros as $key => $condicao) {
+                $c = explode(':', $condicao);
+                $posts = $this->post::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
+            }
+        } else {
+            $posts = Post::orderBy('id', 'desc')->paginate(10);
+        }
+
+
+        return response()->json($posts, 200);
     }
 
     /**
@@ -47,7 +60,6 @@ class PostController extends Controller
 
         $post = $this->post->create([
             'title' => $request->title,
-            'slug' => $request->slug,
             'content' => $request->content,
             'thumb' => $imagen_urn,
         ]);
@@ -85,19 +97,14 @@ class PostController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a alteração. O recurso solicitado não existe'], 404);
         } else {
 
+            $post->fill($request->all());
             if ($request->file('thumb')) {
                 Storage::disk('public')->delete($post->thumb);
+                $imagem = $request->file('thumb');
+                $imagem_urn = $imagem->store('imagens', 'public');
+                $post->thumb = $imagem_urn;
             }
-            $image = $request->file('thumb');
-            $imagen_urn = $image->store('imagens', 'public');
-
-            $post->update([
-                'title' => $request->title,
-                'slug' => $request->slug,
-                'content' => $request->content,
-                'thumb' => $imagen_urn,
-
-            ]);
+            $post->save();
             return response()->json($post, 200);
         }
     }
@@ -108,7 +115,7 @@ class PostController extends Controller
      * @param  integer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,)
+    public function destroy($id)
     { {
             $post = $this->post->find($id);
             if ($post === null) {
@@ -117,7 +124,7 @@ class PostController extends Controller
                 Storage::disk('public')->delete($post->thumb);
 
                 $post->delete();
-                return response()->json(['msg' => 'A post removido com sucesso!'], 200);
+                return response()->json(['msg' => 'O post removido com sucesso!'], 200);
             }
         }
     }

@@ -39,6 +39,10 @@ import Modal from './components/comuns/Modal.vue';
 app.component('modal-component', Modal);
 import AlertMsg from './components/comuns/AlertMsg.vue';
 app.component('alert-component', AlertMsg);
+import Paginate from './components/comuns/Paginate.vue';
+app.component('paginate-component', Paginate);
+import Table from './components/comuns/Table.vue';
+app.component('tabela-component', Table);
 
 
 /**
