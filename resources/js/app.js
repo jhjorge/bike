@@ -43,6 +43,8 @@ import Paginate from './components/comuns/Paginate.vue';
 app.component('paginate-component', Paginate);
 import Table from './components/comuns/Table.vue';
 app.component('tabela-component', Table);
+import Bikes from './components/layouts/Bikes.vue';
+app.component('bikes-component', Bikes);
 
 
 /**

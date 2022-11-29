@@ -1,422 +1,272 @@
 <template>
   <div>
-    <div class="container text-center">
-      <modal-component id="modalBlog" titulo="Adicionar Post">
-        <template v-slot:alertText>
-          <alert-component
-            titleText="Erro ao tentar cadastrar o Post"
-            :msg="fetchDetails"
-            tipo="danger"
-            v-if="fetchStatus == 'erro'"
-          ></alert-component>
-          <alert-component
-            titleText="Post Criado!"
-            :msg="fetchDetails"
-            tipo="success"
-            v-if="fetchStatus == 'criado'"
-          ></alert-component>
-        </template>
-        <template v-slot:conteudo>
-          <div class="mb-3">
-            <label for="tituloPostModal" class="form-label"
-              >Titulo do Post</label
-            >
-            <input
-              v-model="tituloPost"
-              type="text"
-              class="form-control"
-              id="tituloPostModal"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="conteudoPostModal" class="form-label"
-              >Conteudo do Post</label
-            >
-            <textarea
-              v-model="conteudoPost"
-              class="form-control"
-              id="conteudoPostModal"
-              rows="6"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="formFile" class="form-label">Imagem de Destaque</label>
-            <input
-              @change="carregarImg($event)"
-              class="form-control"
-              type="file"
-              id="formFile"
-            />
-          </div>
-        </template>
-        <template v-slot:footerModal>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Fechar
-            </button>
-            <button
-              @click="salvar() & spinnerButton()"
-              type="button"
-              class="btn btn-primary"
-            >
-              <div v-if="loader">
-                <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-              </div>
-
-              Concluir
-            </button>
-          </div>
-        </template>
-      </modal-component>
-
-      <modal-component
-        id="deletePost"
-        :setInfo="objInfo"
-        :titulo="'Deletar ' + objInfo.title"
-      >
-        <template v-slot:alertText>
-          <alert-component
-            titleText="Erro ao tentar remover o Post"
-            :msg="fetchDetails"
-            tipo="danger"
-            v-if="fetchStatus == 'deleteErro'"
-          ></alert-component>
-          <alert-component
-            titleText="Post Removido!"
-            :msg="fetchDetails"
-            tipo="success"
-            v-if="fetchStatus == 'removido'"
-          ></alert-component>
-        </template>
-
-        <template v-slot:conteudo>
-          <div class="container">
-            <div class="row">
-              <h5>{{ objInfo.title }}</h5>
-              <img
-                :src="'/storage/' + objInfo.thumb"
-                class="img-thumbnail"
-                v-if="objInfo.thumb"
-              />
-            </div>
-            <div class="row mt-2">
-              <label for="ContentInfo" class="label form-label"
-                >Conteudo:</label
-              >
-              <textarea
-                id="ContentInfo"
-                disabled
-                :value="objInfo.content"
-                rows="5"
-                v-if="objInfo.content"
-              ></textarea>
-            </div>
-            <div class="row mt-2">
-              <div class="col-5" v-if="objInfo.created_at">
-                <span class="text-muted"
-                  >Criado: {{ formatDate(objInfo.created_at) }}
-                </span>
-              </div>
-              <div class="col-5" v-if="objInfo.updated_at">
-                <span class="text-muted"
-                  >Atualizado: {{ formatDate(objInfo.updated_at) }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </template>
-        <template v-slot:footerModal>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Fechar
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="removePost(objInfo.id) & spinnerButton()"
-            >
-              <div v-if="loader">
-                <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-              </div>
-
-              Remover
-            </button>
-          </div>
-        </template>
-      </modal-component>
-
-      <modal-component
-        id="visualizarModal"
-        :setInfo="objInfo"
-        titulo="Visualizar Post"
-      >
-        <template v-slot:conteudo>
-          <div class="container">
-            <div class="row">
-              <h5>{{ objInfo.title }}</h5>
-              <img
-                :src="'/storage/' + objInfo.thumb"
-                class="img-thumbnail"
-                v-if="objInfo.thumb"
-              />
-            </div>
-            <div class="row mt-2">
-              <label for="ContentInfo" class="label form-label"
-                >Conteudo:</label
-              >
-              <textarea
-                id="ContentInfo"
-                disabled
-                :value="objInfo.content"
-                rows="5"
-                v-if="objInfo.content"
-              ></textarea>
-            </div>
-            <div class="row mt-2">
-              <div class="col-5" v-if="objInfo.created_at">
-                <span class="text-muted"
-                  >Criado: {{ formatDate(objInfo.created_at) }}
-                </span>
-              </div>
-              <div class="col-5" v-if="objInfo.updated_at">
-                <span class="text-muted"
-                  >Atualizado: {{ formatDate(objInfo.updated_at) }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </template>
-        <template v-slot:footerModal>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Fechar
-            </button>
-          </div>
-        </template>
-      </modal-component>
-
-      <h1 class="h1 col-md my-2">Ultimos Post</h1>
-      <div class="col-md">
-        <button type="button" class="btn btn-primary" @click="loadList">
-          Carregar Posts
-        </button>
-        <button
-          type="button"
-          class="btn mx-1 btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#modalBlog"
-        >
-          Nova Postagem
-        </button>
+    <!--Page-->
+    <div class="container my-4">
+      <div class="row my-3">
+        <div class="col">
+          <h1 class="h4 title-page my-3 my-md-2">Home</h1>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="container">
-    <section v-if="errored">
-      <p>
-        Pedimos desculpas, não estamos conseguindo recuperar as informações no
-        momento. Por favor, tente novamente mais tarde.
-      </p>
-    </section>
-    <section v-else>
-      <div v-if="loading">Carregando...</div>
-      <div class="card-deck d-flex flex-wrap" v-else>
-        <div
-          v-for="post in posts"
-          :key="post.id"
-          class="card my-2"
-          style="width: 19rem"
-        >
-          <img
-            class="card-img-top card-img-post"
-            :src="'/storage/' + post.thumb"
-            alt="Card image cap"
-          />
-          <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <span><b>ID:</b> {{ post.id }}</span>
-            <p
-              class="card-text text-truncate text-wrap"
-              style="max-width: 250px; max-height: 120px"
-            >
-              {{ post.content }}
+      <!--Seção Post-->
+      <div class="card my-4 p-0">
+        <div class="card-header">
+          <h2 class="h5">Ultimos Posts</h2>
+        </div>
+
+        <div class="card-body">
+          <section v-if="errored">
+            <p>
+              Pedimos desculpas, não estamos conseguindo recuperar as
+              informações no momento. Por favor, tente novamente mais tarde.
             </p>
-            <p class="card-text">
-              <small class="text-muted"
-                >Atualizado: {{ formatDate(post.updated_at) }}</small
-              >
-            </p>
-            <div class="botoes-card">
-              <button
-                data-bs-toggle="modal"
-                data-bs-target="#visualizarModal"
-                class="btn btn-outline-primary btn-small"
-                @click="setStore(post)"
-              >
-                Visualizar
-              </button>
-              <button class="btn btn-outline-primary mx-1 btn-small">
-                Editar
-              </button>
-              <button
-                class="btn btn-outline-danger btn-small"
-                data-bs-toggle="modal"
-                data-bs-target="#deletePost"
-                @click="setStore(post)"
-              >
-                Remover
-              </button>
+          </section>
+          <section v-else>
+            <div v-if="loading">Carregando...</div>
+            <div v-else>
+              <div class="row">
+                <div
+                  class="col-md-4 py-2 col-6"
+                  v-for="post in posts.data"
+                  :key="post.id"
+                >
+                  <div class="card" style="max-width: 22rem">
+                    <div class="card-header">{{ post.title }}</div>
+                    <img :src="'/storage/' + post.thumb" class="img-fluid" />
+
+                    <div class="card-footer">
+                      <div class="row mt-2">
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Criado: {{ formatDate(post.created_at) }}
+                          </span>
+                        </div>
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Atualizado: {{ formatDate(post.updated_at) }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </section>
+        </div>
+        <div class="card-footer pt-md-3">
+          <div class="col text-end">
+            <button type="button" class="btn btn-secondary" @click="loadList">
+              Atualizar
+            </button>
           </div>
         </div>
       </div>
-    </section>
+      <!--Seção Eventos-->
+      <div class="card my-4 p-0">
+        <div class="card-header">
+          <h2 class="h5">Ultimos Eventos</h2>
+        </div>
+
+        <div class="card-body">
+          <section v-if="errored">
+            <p>
+              Pedimos desculpas, não estamos conseguindo recuperar as
+              informações no momento. Por favor, tente novamente mais tarde.
+            </p>
+          </section>
+          <section v-else>
+            <div v-if="loading">Carregando...</div>
+            <div v-else>
+              <div class="row">
+                <div
+                  class="col-md-4 py-2 col-6"
+                  v-for="evento in eventos.data"
+                  :key="evento.id"
+                >
+                  <div class="card" style="max-width: 22rem">
+                    <div class="card-header">{{ evento.title }}</div>
+                    <img :src="'/storage/' + evento.thumb" class="img-fluid" />
+
+                    <div class="card-footer">
+                      <div class="row mt-2">
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Criado: {{ formatDate(evento.created_at) }}
+                          </span>
+                        </div>
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Atualizado: {{ formatDate(evento.updated_at) }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="card-footer pt-md-3">
+          <div class="col text-end">
+            <button type="button" class="btn btn-secondary" @click="loadList">
+              Atualizar
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--Seção Bikes-->
+      <div class="card my-4 p-0">
+        <div class="card-header">
+          <h2 class="h5">Ultimas Bikes</h2>
+        </div>
+
+        <div class="card-body">
+          <section v-if="errored">
+            <p>
+              Pedimos desculpas, não estamos conseguindo recuperar as
+              informações no momento. Por favor, tente novamente mais tarde.
+            </p>
+          </section>
+          <section v-else>
+            <div v-if="loading">Carregando...</div>
+            <div v-else>
+              <div class="row">
+                <div
+                  class="col-md-4 py-2 col-6"
+                  v-for="bike in bikes.data"
+                  :key="bike.id"
+                >
+                  <div class="card" style="max-width: 22rem">
+                    <div class="card-header">{{ bike.title }}</div>
+                    <img :src="'/storage/' + bike.thumb" class="img-fluid" />
+
+                    <div class="card-footer">
+                      <div class="row mt-2">
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Criado: {{ formatDate(bike.created_at) }}
+                          </span>
+                        </div>
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Atualizado: {{ formatDate(bike.updated_at) }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="card-footer pt-md-3">
+          <div class="col text-end">
+            <button type="button" class="btn btn-secondary" @click="loadList">
+              Atualizar
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--Seção Produtos-->
+      <div class="card my-4 p-0">
+        <div class="card-header">
+          <h2 class="h5">Ultimos Produtos</h2>
+        </div>
+
+        <div class="card-body">
+          <section v-if="errored">
+            <p>
+              Pedimos desculpas, não estamos conseguindo recuperar as
+              informações no momento. Por favor, tente novamente mais tarde.
+            </p>
+          </section>
+          <section v-else>
+            <div v-if="loading">Carregando...</div>
+            <div v-else>
+              <div class="row">
+                <div
+                  class="col-md-4 py-2 col-6"
+                  v-for="produto in produtos.data"
+                  :key="produto.id"
+                >
+                  <div class="card" style="max-width: 22rem">
+                    <div class="card-header">{{ produto.title }}</div>
+                    <img :src="'/storage/' + produto.thumb" class="img-fluid" />
+
+                    <div class="card-footer">
+                      <div class="row mt-2">
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Criado: {{ formatDate(produto.created_at) }}
+                          </span>
+                        </div>
+                        <div class="col-5">
+                          <span class="text-muted"
+                            >Atualizado: {{ formatDate(produto.updated_at) }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="card-footer pt-md-3">
+          <div class="col text-end">
+            <button type="button" class="btn btn-secondary" @click="loadList">
+              Atualizar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
   
   <script>
 import Modal from "../comuns/Modal.vue";
+import Paginate from "../comuns/Paginate.vue";
 
 export default {
-  name: "Home",
+  components: { Paginate },
+  name: "Eventos",
   component: { Modal },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/posts",
-    posts: [],
+    urlPosts: "http://localhost:8000/api/posts?valor=3",
+    urlEventos: "http://localhost:8000/api/eventos?valor=3",
+    urlBikes: "http://localhost:8000/api/bikes?valor=3",
+    urlProdutos: "http://localhost:8000/api/produtos?valor=3",
+    posts: { data: [] },
+    eventos: { data: [] },
+    bikes: { data: [] },
+    produtos: { data: [] },
     loading: true,
     loader: false,
     errored: false,
-    tituloPost: null,
-    conteudoPost: null,
-    imagemPost: [],
-    fetchStatus: null,
-    fetchDetails: null,
-    objInfo: [],
   }),
 
   methods: {
-    spinnerButton() {
-      this.loader = !false;
-      setTimeout(() => {
-        this.loader = !true;
-      }, 2000);
-    },
-    clearField() {
-      this.tituloPost = null;
-      this.conteudoPost = null;
-      this.imagemPost = [];
-    },
-    salvar() {
-      let formData = new FormData();
-      formData.append("title", this.tituloPost);
-      formData.append("content", this.conteudoPost);
-      formData.append("thumb", this.imagemPost[0]);
-      let config = {
-        Headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-        },
-      };
-
-      axios
-        .post(this.urlPosts, formData, config)
-        .then((response) => {
-          setTimeout(() => {
-            this.fetchStatus = "criado";
-            this.fetchDetails = response;
-            this.clearField();
-            this.loadList();
-          }, 2000);
-          this.fetchStatus = !true;
-          this.fetchDetails = !true;
-        })
-        .catch((erros) => {
-          setTimeout(() => {
-            this.fetchStatus = "erro";
-            this.fetchDetails = erros.response;
-          }, 200);
-          this.fetchStatus = null;
-          this.fetchDetails = null;
-        });
-    },
-    removePost(obj) {
-      let confirma = confirm("Tem certeza que deseja remover este Post?");
-      if (!confirma) {
-        return false;
+    page(link) {
+      if (link.url) {
+        this.urlPaginacao = link.url.split("?")[1];
+        this.loadList();
       }
-
-      let formData = new FormData();
-      formData.append("_method", "delete");
-
-      let config = {
-        headers: {
-          Accept: "application/json",
-        },
-      };
-      let url = this.urlPosts + "/" + obj;
-
-      axios
-        .post(url, formData, config)
-        .then((response) => {
-          setTimeout(() => {
-            this.loadList();
-            this.fetchStatus = "removido";
-            this.fetchDetails = response;
-          }, 2000);
-          this.fetchStatus = null;
-          this.fetchDetails = null;
-        })
-        .catch((errors) => {
-          setTimeout(() => {
-            this.fetchStatus = "deleteErro";
-            this.fetchDetails = errors.response;
-          }, 2000);
-          this.fetchStatus = null;
-          this.fetchDetails = null;
-        });
     },
 
     loadList() {
-      axios
-        .get(this.urlPosts)
-        .then((response) => {
-          this.posts = response.data.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errored = true;
-        })
-        .finally(() => (this.loading = false));
-    },
-    carregarImg(e) {
-      this.imagemPost = e.target.files;
+      this.loading = !this.loading;
+
+      this.getBikes();
+      this.getEventos();
+      this.getPosts();
+      this.getProdutos();
     },
 
-    currencydecimal(value) {
-      return value.toFixed(2);
-    },
     formatDate(dateString) {
       const date = new Date(dateString);
       return new Intl.DateTimeFormat("default", { dateStyle: "short" }).format(
@@ -426,24 +276,88 @@ export default {
     setStore(obj) {
       this.objInfo = obj;
     },
+    getBikes() {
+      axios
+        .get(this.urlBikes)
+        .then((response) => {
+          this.bikes = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    getPosts() {
+      axios
+        .get(this.urlPosts)
+        .then((response) => {
+          this.posts = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    getEventos() {
+      axios
+        .get(this.urlEventos)
+        .then((response) => {
+          this.eventos = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    getProdutos() {
+      axios
+        .get(this.urlProdutos)
+        .then((response) => {
+          this.produtos = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
   },
   mounted() {
-    axios
-      .get(this.urlPosts)
-      .then((response) => {
-        this.posts = response.data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.errored = true;
-      })
-      .finally(() => (this.loading = false));
+    this.getBikes();
+    this.getEventos();
+    this.getPosts();
+    this.getProdutos();
   },
 };
 </script>
 <style lang="sass" scoped>
-.card-img-post
-  max-width: 350px
-  max-height: 180px
+.title-page
+  font-size: 4rem
+.btn-total
+  border-radius: 50px
+  padding: 0.1rem 0.5rem
+  margin-left: 2px
+  margin-top: -8px
+  z-index: 10
+  font-size: 0.8rem
+  animation-duration: 3s
+.img-tabela
+  max-height: 3rem
+.btn-tabela
+
+  text-align: center
+
+.card
+  .card-header
+    width: 100%
+  .card-body
+    width: 100%
+  .card-footer
+    display: flex
+    justify-content: end
+    width: 100%
 </style>
   

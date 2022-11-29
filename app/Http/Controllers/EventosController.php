@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateEventosRequest;
 use App\Models\Eventos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Arr;
 
 class EventosController extends Controller
 {
@@ -36,8 +35,7 @@ class EventosController extends Controller
                 $c = explode(':', $condicao);
                 $eventos = $this->evento::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
             }
-        }
-        if ($request->has('valor')) {
+        } elseif ($request->has('valor')) {
             $cont = $request->valor;
             $eventos = Eventos::orderBy('id', 'desc')->paginate($cont);
         } else {
@@ -61,27 +59,33 @@ class EventosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreEventosRequest $request)
+
     {
+        $img = array();
         //return response()->json($request, 404);
         //$imageGallery_urn = "";
         $imageThumb = $request->file('thumb');
         $imageGallery = $request->file('gallery');
         $imagen_urn = $imageThumb->store('imagens', 'public');
 
-        foreach ($imageGallery as $item) {
-            $imageGallery_urn[] = $item->store('imagens/galeria');
-        };
+        if ($request->file('gallery')) {
+            foreach ($imageGallery as $file) {
+                $img[] = $file->store('imagens/galeria');
+            }
+        }
+        //dd($request, $img);
 
-        return response()->json($imageGallery_urn, 404);
 
-        $evento = $this->evento->create(array_merge([
+
+        $evento = $this->evento->create(([
             'title' => $request->title,
             'locale' => $request->locale,
             'date' => $request->date,
             'content' => $request->content,
-            'gallery' => $imageGallery_urn,
+            'gallery' => $img,
             'thumb' => $imagen_urn,
         ]));
+
         return response()->json($evento, 201);
     }
 
@@ -112,30 +116,34 @@ class EventosController extends Controller
     public function update(UpdateEventosRequest $request, $id)
     {
         $evento = $this->evento->find($id);
+        $imgInfo = $this->evento->find($id);
         if ($evento === null) {
             return response()->json(['erro' => 'Impossivel realizar a alteração. O recurso solicitado não existe'], 404);
         } else {
-
             $evento->fill($request->all());
+
+
             if ($request->file('thumb')) {
-                Storage::disk('public')->delete($evento->thumb);
+                Storage::delete($imgInfo->thumb);
                 $imagem = $request->file('thumb');
                 $imagem_urn = $imagem->store('imagens', 'public');
                 $evento->thumb = $imagem_urn;
             }
-            $evento->fill($request->all());
-            if ($request->file('gallery_')) {
-                Storage::disk('public')->delete($evento->gallery);
-                $imagemGallery = $request->file('gallery_');
-                foreach ($imagemGallery as $file) {
-                    $name = $file->store('imagens/galeria');
-                    $img[] = $name;
+
+            if ($request->file('gallery')) {
+                foreach ($imgInfo->gallery as $img) {
+                    Storage::delete($img);
                 }
-                $imagemGallery_urn = Arr::join($img, ',');
 
-
-                $evento->gallery = $imagemGallery_urn;
+                $imgRecover = array();
+                $imagemGalleryUpdate = $request->file('gallery');
+                foreach ($imagemGalleryUpdate as $file) {
+                    $imgRecover[] = $file->store('imagens/galeria');
+                }
+                $evento->gallery = $imgRecover;
             }
+
+
             $evento->save();
             return response()->json($evento, 200);
         }

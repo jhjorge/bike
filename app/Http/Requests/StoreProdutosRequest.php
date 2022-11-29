@@ -13,7 +13,7 @@ class StoreProdutosRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class StoreProdutosRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|min:3|max:50',
+            'descricao' => 'required|min:10|max:2000',
+            'content' => 'required|min:10|max:2000',
+            'cor' => 'max:100',
+            'tamanho' => 'max:100',
+            'thumb' => 'required|mimes:png,jpg,jpeg',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatório!',
+            'title.unique' => 'O titulo já existe',
+            'title.min' => 'O tiítulo deve conter no mínimo 3 letras',
+            'title.max' => 'O título deve conter no máximo 50 letras',
+            'thumb.mimes' => 'A imagem de destaque deve ser png, jpg ou jpeg'
         ];
     }
 }

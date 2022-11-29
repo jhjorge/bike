@@ -29,7 +29,6 @@ class StoreEventosRequest extends FormRequest
             'date' => 'date',
             'content' => 'required|min:10|max:2000',
             'thumb' => 'required|',
-            'gallery' => '',
             'slug' => 'min:3|max:30',
         ];
     }

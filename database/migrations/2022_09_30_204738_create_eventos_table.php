@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('locale');
-            $table->date('date');
+            $table->string('date');
             $table->text('content');
             $table->string('thumb');
-            $table->string('gallery');
+            $table->json('gallery');
             $table->timestamps();
         });
     }

@@ -31,6 +31,7 @@
 </template>
 <script>
 import Home from "./layouts/Home.vue";
+import Bikes from "./layouts/Bikes.vue";
 import Produtos from "./layouts/Produtos.vue";
 import Blog from "./layouts/Blog.vue";
 import Eventos from "./layouts/Eventos.vue";
@@ -44,10 +45,12 @@ export default {
     Blog,
     Eventos,
     Menu,
+    Bikes,
   },
   data: () => ({
     menuNav: [
       { label: "Home" },
+      { label: "Bikes" },
       { label: "Produtos" },
       { label: "Blog" },
       { label: "Eventos" },

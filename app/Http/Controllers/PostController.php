@@ -26,17 +26,20 @@ class PostController extends Controller
 
 
 
-        if ($request->has('filtro')) {
-            $filtros = explode(';', $request->filtro);
 
-            foreach ($filtros as $key => $condicao) {
+        if ($request->has('filtro')) {
+            $posts = explode(';', $request->filtro);
+
+            foreach ($posts as $key => $condicao) {
                 $c = explode(':', $condicao);
                 $posts = $this->post::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
             }
+        } elseif ($request->has('valor')) {
+            $cont = $request->valor;
+            $posts = Post::orderBy('id', 'desc')->paginate($cont);
         } else {
             $posts = Post::orderBy('id', 'desc')->paginate(10);
         }
-
 
         return response()->json($posts, 200);
     }
@@ -93,17 +96,18 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, $id)
     {
         $post = $this->post->find($id);
-        if ($post === null) {
+        if ($post == null) {
             return response()->json(['erro' => 'Impossivel realizar a alteração. O recurso solicitado não existe'], 404);
         } else {
-
-            $post->fill($request->all());
             if ($request->file('thumb')) {
-                Storage::disk('public')->delete($post->thumb);
+                Storage::delete($post->thumb);
+                $post->fill($request->all());
+
                 $imagem = $request->file('thumb');
                 $imagem_urn = $imagem->store('imagens', 'public');
                 $post->thumb = $imagem_urn;
             }
+
             $post->save();
             return response()->json($post, 200);
         }
@@ -121,7 +125,7 @@ class PostController extends Controller
             if ($post === null) {
                 return response()->json(['erro' => 'Impossivel realizar a exclusão. O recurso solicitado não existe'], 404);
             } else {
-                Storage::disk('public')->delete($post->thumb);
+                Storage::delete($post->thumb);
 
                 $post->delete();
                 return response()->json(['msg' => 'O post removido com sucesso!'], 200);

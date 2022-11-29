@@ -1,13 +1,13 @@
 <template>
-  <div class="container my-5">
-    <div class="row justify-content-center">
+  <div class="container my-5 px-md-5 py-2">
+    <div class="row py-md-5 m-0 justify-content-center">
       <div class="col-md-8">
         <div class="card">
           <div class="card-header row justify-content-center mx-1 text-center">
             Painel de Login
           </div>
 
-          <div class="card-body">
+          <div class="card-body my-4">
             <form method="POST" action="">
               <input type="hidden" name="_token" :value="csrf_token" />
               <div class="row mb-3">
@@ -29,7 +29,7 @@
                 </div>
               </div>
 
-              <div class="row mb-3">
+              <div class="row mb-4">
                 <label
                   for="password"
                   class="col-md-4 col-form-label text-md-end"
@@ -48,28 +48,9 @@
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-md-6 offset-md-4">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      name="remember"
-                      id="remember"
-                    />
-
-                    <label class="form-check-label" for="remember">
-                      Mantenha-me conectado
-                    </label>
-                  </div>
-                </div>
-              </div>
-
               <div class="row mb-0">
-                <div class="col-md-8 offset-md-4">
+                <div class="col-md-8 text-center offset-md-4">
                   <button type="submit" class="btn btn-primary">Login</button>
-
-                  <a class="btn btn-link" href=""> Esqueceu a senha? </a>
                 </div>
               </div>
             </form>

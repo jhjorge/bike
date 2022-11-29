@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->unique();
+            $table->text('content');
+            $table->text('descricao');
+            $table->string('thumb');
             $table->timestamps();
         });
     }

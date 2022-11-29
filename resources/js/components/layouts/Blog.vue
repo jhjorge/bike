@@ -294,7 +294,7 @@
     </modal-component>
 
     <div class="container my-4">
-      <div class="row">
+      <div class="row my-3">
         <div class="col-md-7 col-sm-4">
           <h1 class="h1 title-page my-3 my-md-2">
             Blog<button
@@ -309,7 +309,7 @@
             </button>
           </h1>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 p-2">
           <div class="card">
             <div class="card-header">
               <h2 class="h5">Pesquisar <i class="bi bi-search"></i></h2>
@@ -657,7 +657,7 @@ export default {
           this.errored = true;
           this.urlPaginacao = "";
           this.urlFiltro = "";
-          this.urlPosts = "https://goodnine.com.br/api/posts";
+          this.urlPosts = "http://localhost:8000/api/posts";
         })
         .finally(() => (this.loading = false));
     },
@@ -704,7 +704,7 @@ export default {
   font-size: 0.8rem
   animation-duration: 3s
 .img-tabela
-  max-height: 9rem
+  max-height: 3rem
 .btn-tabela
 
   text-align: center

@@ -1,4 +1,5 @@
 <template>
+  <!--Modal de Criação -->
   <div>
     <modal-component id="modalEvento" titulo="Adicionar Evento">
       <template v-slot:alertText>
@@ -26,21 +27,17 @@
             class="form-control"
             id="tituloEventoModal"
           />
-          {{ tituloPost }}
         </div>
-        <div>
+        <div class="mb-3">
           <label class="form-label" for="meeting-time">Data do evento</label>
+          {{ dataPost }}
 
           <input
             v-model="dataPost"
-            type="datetime-local"
+            type="input"
             id="meeting-time"
             class="mb-3 form-control"
-            name="meeting-time"
-            min="2022-01-01T00:00"
-            max="2035-12-28T00:00"
           />
-          {{ dataPost }}
         </div>
 
         <div class="mb-3">
@@ -53,7 +50,6 @@
             class="form-control"
             id="localEventoModal"
           />
-          {{ localPost }}
         </div>
 
         <div class="mb-3">
@@ -66,19 +62,13 @@
             id="conteudoPostModalThumb"
             rows="6"
           ></textarea>
-          {{ conteudoPost }}
         </div>
         <div class="mb-3">
           <label for="formFileStore" class="form-label"
             >Imagem de Destaque</label
           >
-          <input
-            @change="carregarImg($event)"
-            class="form-control"
-            type="file"
-            id="formFileStoreThumb"
-          />
-          {{ imagemPost }}
+          <input @change="carregarImg($event)" class="form-control"
+          accept=”image/*” type="file" id="formFileStoreThumb" />
         </div>
         <div class="mb-3">
           <label for="formFileStoreEvent" class="form-label"
@@ -86,10 +76,6 @@
           >
           <input @change="carregarImgGaleria($event)" class="form-control"
           type="file" accept=”image/*” multiple id="formFileStoreEvent" />
-          {{ imagemPost[0] }}
-          {{ imagemGaleriaPost[0] }}
-          {{ imagemGaleriaPost[1] }}
-          {{ imagemGaleriaPost[2] }}
         </div>
       </template>
       <template v-slot:footerModal>
@@ -119,21 +105,54 @@
         </div>
       </template>
     </modal-component>
-
+    <!--Modal da Galeria-->
+    <modal-component
+      :setInfo="objInfo.data"
+      id="modalGaleriaEvento"
+      titulo="Galeria"
+    >
+      <template v-slot:conteudo>
+        <div class="mb-3">
+          <div class="card">
+            <div class="card-body container">
+              <img
+                v-for="img in objInfo.gallery"
+                :key="img.id"
+                :src="'/storage/' + img"
+                class="img-thumbnail col-6"
+                style="max-width: 15rem"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-slot:footerModal>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Fechar
+          </button>
+        </div>
+      </template>
+    </modal-component>
+    <!--Modal de Atualizar!-->
     <modal-component
       :setInfo="objInfo.data"
       id="atualizarPost"
-      titulo="Atualizar Post"
+      titulo="Atualizar Evento"
     >
       <template v-slot:alertText>
         <alert-component
-          titleText="Erro ao tentar atualizar o Post"
+          titleText="Erro ao tentar atualizar o Evento"
           :msg="fetchDetails"
           tipo="danger"
           v-if="fetchStatus == 'error'"
         ></alert-component>
         <alert-component
-          titleText="Post Atualizado!"
+          titleText="Evento Atualizado!"
           :msg="fetchDetails"
           tipo="success"
           v-if="fetchStatus == 'atualizado'"
@@ -143,13 +162,37 @@
       <template v-slot:conteudo>
         <div class="mb-3">
           <label for="atualizaTituloPost" class="form-label"
-            >Titulo do Post</label
+            >Titulo do Evento</label
           >
           <input
             v-model="objInfo.title"
             type="text"
             class="form-control"
             id="atualizaTituloPost"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="meeting-timeEdit" class="form-label"
+            >Data do evento</label
+          >
+
+          <input
+            v-model="objInfo.date"
+            type="input"
+            id="meeting-timeEdit"
+            class="mb-3 form-control"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="localEventoModal" class="form-label"
+            >Local do Evento</label
+          >
+          <input
+            v-model="objInfo.locale"
+            type="text"
+            class="form-control"
+            id="localEventoModal"
           />
         </div>
 
@@ -164,16 +207,20 @@
             rows="6"
           ></textarea>
         </div>
+
         <div class="mb-3">
           <label for="atualizaformFile" class="form-label"
             >Alterar Imagem ?</label
           >
-          <input
-            @change="carregarImg($event)"
-            class="form-control"
-            type="file"
-            id="atualizaformFile"
-          />
+          <input @change="carregarImg($event)" class="form-control" type="file"
+          accept=”image/*” id="atualizaformFile" />
+        </div>
+        <div class="mb-3">
+          <label for="formFileStoreEventEdit" class="form-label"
+            >Alterar Galeria ?</label
+          >
+          <input @change="carregarImgGaleria($event)" class="form-control"
+          type="file" accept=”image/*” multiple id="formFileStoreEventEdit" />
         </div>
       </template>
       <template v-slot:footerModal>
@@ -204,6 +251,8 @@
       </template>
     </modal-component>
 
+    <!--Modal de Deletar-->
+
     <modal-component
       id="deletePost"
       :setInfo="objInfo.data"
@@ -211,13 +260,13 @@
     >
       <template v-slot:alertText>
         <alert-component
-          titleText="Erro ao tentar remover o Post"
+          titleText="Erro ao tentar remover o Evento"
           :msg="fetchDetails"
           tipo="danger"
           v-if="fetchStatus == 'deleteErro'"
         ></alert-component>
         <alert-component
-          titleText="Post Removido!"
+          titleText="Evento Removido!"
           :msg="fetchDetails"
           tipo="success"
           v-if="fetchStatus == 'removido'"
@@ -286,23 +335,26 @@
       </template>
     </modal-component>
 
+    <!--Modal de Visualizar-->
+
     <modal-component
       id="visualizarModal"
       :setInfo="objInfo.data"
-      titulo="Visualizar Post"
+      titulo="Visualizar Evento"
     >
       <template v-slot:conteudo>
         <div class="container">
-          <div class="row">
-            <h5>{{ objInfo.title }}</h5>
+          <div class="row mb-3">
+            <h5 class="mb-3">Titulo: {{ objInfo.title }}</h5>
+
             <img
               :src="'/storage/' + objInfo.thumb"
               class="img-thumbnail"
               v-if="objInfo.thumb"
             />
           </div>
-          <div class="row mt-2">
-            <label for="ContentInfo" class="label form-label">Conteudo:</label>
+          <div class="row mb-3">
+            <label for="ContentInfo" class="label form-label">Conteudo</label>
             <textarea
               id="ContentInfo"
               disabled
@@ -311,7 +363,39 @@
               v-if="objInfo.content"
             ></textarea>
           </div>
-          <div class="row mt-2">
+          <div class="row">
+            <label for="localeEventView" class="col form-label">Data</label>
+            <label for="testeId1" class="col form-label">Local</label>
+          </div>
+          <div class="row mb-3">
+            <div class="col input-group">
+              <span class="input-group-text"
+                ><i class="bi bi-calendar2-event"></i
+              ></span>
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Dollar amount (with dot and two decimal places)"
+                disabled
+                :value="objInfo.date"
+              />
+            </div>
+
+            <div class="col input-group">
+              <span class="input-group-text"
+                ><i class="bi bi-geo-alt"></i
+              ></span>
+              <input
+                type="text"
+                id="localeEventView"
+                disabled
+                :value="objInfo.locale"
+                class="form-control"
+                aria-label="Dollar amount (with dot and two decimal places)"
+              />
+            </div>
+          </div>
+          <div class="row mt-5">
             <div class="col-5" v-if="objInfo.created_at">
               <span class="text-muted"
                 >Criado: {{ formatDate(objInfo.created_at) }}
@@ -334,18 +418,30 @@
           >
             Fechar
           </button>
+          <button
+            @click="setStore(objInfo)"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#modalGaleriaEvento"
+            class="btn btn-primary"
+            data-keyboard="true"
+          >
+            Visualizar Galeria
+          </button>
         </div>
       </template>
     </modal-component>
+
+    <!--Page-->
     <div class="container my-4">
-      <div class="row">
+      <div class="row my-3">
         <div class="col-md-7 col-sm-4">
           <h1 class="h1 title-page my-3 my-md-2">
             Eventos<button
               v-if="posts.total"
               data-toggle="tooltip"
               data-placement="top"
-              title="Total de Posts"
+              title="Total de Eventos"
               type="button"
               class="btn btn-total btn-primary"
             >
@@ -405,10 +501,9 @@
         </div>
       </div>
 
-      <div class="div"></div>
       <div class="card my-4 p-0">
         <div class="card-header">
-          <h2 class="h5">Lista de Posts</h2>
+          <h2 class="h5">Lista de Eventos</h2>
         </div>
 
         <div class="card-body">
@@ -442,39 +537,41 @@
                       />
                     </td>
                     <td>{{ post.locale }}</td>
-                    <td>{{ formatDate(post.date) }}</td>
+                    <td>{{ post.date }}</td>
 
                     <td>{{ formatDate(post.created_at) }}</td>
-                    <td class="btn-tabela">
-                      <button
-                        data-bs-toggle="modal"
-                        data-bs-target="#visualizarModal"
-                        class="btn btn-outline-primary btn-small"
-                        @click="setStore(post)"
-                      >
-                        Visualizar
-                      </button>
-                      <button
-                        data-bs-toggle="modal"
-                        data-bs-target="#atualizarPost"
-                        class="
-                          btn btn-outline-primary
-                          mx-md-2 mx-0
-                          my-2 my-md-0
-                          btn-small
-                        "
-                        @click="setStore(post)"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        class="btn btn-outline-danger btn-small"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deletePost"
-                        @click="setStore(post)"
-                      >
-                        Remover
-                      </button>
+                    <td class="btn-tabel">
+                      <div class="conatiner">
+                        <button
+                          data-bs-toggle="modal"
+                          data-bs-target="#visualizarModal"
+                          class="btn btn-outline-primary btn-small"
+                          @click="setStore(post)"
+                        >
+                          Visualizar
+                        </button>
+                        <button
+                          data-bs-toggle="modal"
+                          data-bs-target="#atualizarPost"
+                          class="
+                            btn btn-outline-primary
+                            mx-md-2 mx-0
+                            my-2 my-md-0
+                            btn-small
+                          "
+                          @click="setStore(post)"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          class="btn btn-outline-danger btn-small"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deletePost"
+                          @click="setStore(post)"
+                        >
+                          Remover
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 </template>
@@ -509,7 +606,7 @@
               data-bs-toggle="modal"
               data-bs-target="#modalEvento"
             >
-              Nova Postagem
+              Novo Evento
             </button>
           </div>
         </div>
@@ -528,21 +625,22 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/eventos",
+    urlPosts: "http://localhost:8000/api/eventos",
     posts: { data: [] },
     loading: true,
     loader: false,
     errored: false,
 
-    tituloPost: null,
-    localPost: null,
-    dataPost: null,
-    conteudoPost: null,
+    tituloPost: "",
+    localPost: "",
+    dataPost: "",
+    conteudoPost: "",
     imagemPost: [],
     imagemGaleriaPost: [],
+    objetoGaleria: [],
 
-    fetchStatus: null,
-    fetchDetails: null,
+    fetchStatus: "",
+    fetchDetails: "",
     objInfo: [],
     busca: { id: "", title: "" },
     urlPaginacao: "",
@@ -550,6 +648,8 @@ export default {
   }),
 
   methods: {
+    renderGallery() {},
+
     timeLocale() {
       let date = new Date();
       console.log(date);
@@ -594,9 +694,17 @@ export default {
       formData.append("locale", obj.locale);
       formData.append("date", obj.date);
       formData.append("content", obj.content);
-      formData.append("thumb", this.imagemPost[0]);
-      formData.append("gallery", this.imagemGaleriaPost);
-
+      if (this.imagemPost[0]) {
+        formData.append("thumb", this.imagemPost[0]);
+      }
+      if (this.imagemGaleriaPost) {
+        console.log("Criando o objeto");
+        let imagens = this.imagemGaleriaPost;
+        for (let i = 0; i < imagens.length; i++) {
+          formData.append("gallery[]", imagens[i]);
+          console.log(formData.getAll("gallery[]"));
+        }
+      }
       let url = this.urlPosts + "/" + obj.id;
       let config = {
         Headers: {
@@ -612,7 +720,7 @@ export default {
             this.fetchStatus = "atualizado";
             this.fetchDetails = response;
             this.loadList();
-            atualizaformFile.value = "";
+            this.clearField();
           }, 2000);
           this.fetchStatus = !true;
           this.fetchDetails = !true;
@@ -623,6 +731,7 @@ export default {
             this.fetchDetails = errors.response;
             this.loadList();
             this.clearField();
+            console.log(errors);
             atualizaformFile.value = "";
           }, 2000);
           this.fetchStatus = !true;
@@ -637,12 +746,16 @@ export default {
       }, 2000);
     },
     clearField() {
-      this.tituloPost = null;
-      this.localPost = null;
-      this.dataPost = null;
-      this.conteudoPost = null;
+      this.tituloPost = "";
+      this.localPost = "";
+      this.dataPost = "";
+      this.conteudoPost = "";
+      this.imagemPost = "";
+      this.imagemGaleriaPost = [];
       formFileStoreEvent.value = "";
       formFileStoreThumb.value = "";
+      atualizaformFile.value = "";
+      formFileStoreEventEdit.value = "";
     },
     salvar() {
       let formData = new FormData();
@@ -655,8 +768,8 @@ export default {
         console.log("Criando o objeto");
         let imagens = this.imagemGaleriaPost;
         for (let i = 0; i < imagens.length; i++) {
-          formData.append("gallery", imagens[i]);
-          console.log(formData.getAll("gallery"));
+          formData.append("gallery[]", imagens[i]);
+          console.log(formData.getAll("gallery[]"));
         }
       }
 
@@ -675,7 +788,6 @@ export default {
             this.fetchDetails = response;
             this.clearField();
             this.loadList();
-            console.log(response);
           }, 2000);
           this.fetchStatus = !true;
           this.fetchDetails = !true;
@@ -684,14 +796,13 @@ export default {
           setTimeout(() => {
             this.fetchStatus = "erro";
             this.fetchDetails = erros.response;
-            console.log(erros.response);
           }, 200);
           this.fetchStatus = null;
           this.fetchDetails = null;
         });
     },
     removePost(obj) {
-      let confirma = confirm("Tem certeza que deseja remover este Post?");
+      let confirma = confirm("Tem certeza que deseja remover este Evento?");
       if (!confirma) {
         return false;
       }
@@ -793,7 +904,7 @@ export default {
   font-size: 0.8rem
   animation-duration: 3s
 .img-tabela
-  max-height: 9rem
+  max-height: 3rem
 .btn-tabela
 
   text-align: center
