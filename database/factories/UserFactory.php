@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'lastName' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'thumb' => fake()->imageUrl(),
-            'password' => bcrypt('123'), // password
+            'password' => bcrypt('@Bicicleta097'), // password
         ];
     }
 
