@@ -26,10 +26,8 @@ class StoreEventosRequest extends FormRequest
         return [
             'title' => 'required|unique:eventos|min:3|max:50',
             'locale' => 'required|',
-            'date' => 'date',
             'content' => 'required|min:10|max:2000',
-            'thumb' => 'required|',
-            'slug' => 'min:3|max:30',
+            'thumb' => 'required|image',
         ];
     }
     public function messages()
