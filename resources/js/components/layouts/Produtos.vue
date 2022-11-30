@@ -682,7 +682,7 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "http://localhost:8000/api/produtos",
+    urlPosts: "https://goodnine.com.br/api/produtos",
     posts: { data: [] },
     loading: true,
     loader: false,
