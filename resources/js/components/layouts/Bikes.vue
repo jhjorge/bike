@@ -1585,7 +1585,7 @@ export default {
   },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/bikes",
+    urlPosts: "http://localhost:8000/api/bikes",
     posts: { data: [] },
     loading: true,
     loader: false,

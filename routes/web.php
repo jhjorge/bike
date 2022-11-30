@@ -17,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
+
+
+
+Route::get('/bikes', [App\Http\Controllers\BikesFrontController::class, 'index'])->name('bikes');
+Route::get('/bike/{id}', [App\Http\Controllers\BikesFrontController::class, 'show'])->name('bike.interno');
+
+
+
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/painel', [App\Http\Controllers\PainelController::class, 'index'])->name('painel');
 Route::get('/sobre', [App\Http\Controllers\SobreController::class, 'index'])->name('sobre');

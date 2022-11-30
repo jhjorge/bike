@@ -20,7 +20,22 @@
             </li>
           </ul>
         </div>
+        <hr />
+        <div class="row mt-2 text-center"><h2>Formularios</h2></div>
+        <div class="col">
+          <ul class="nav nav-column">
+            <li v-for="(item, i) in formNav" :key="i" class="nav-item">
+              <a
+                @click.stop.prevent="conteudo = item.label"
+                class="menu-item-nav"
+                href=""
+                >{{ item.label }}</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
+
       <div class="my-4 px-md-4 col container">
         <div class="">
           <component :is="conteudo" />
@@ -35,6 +50,9 @@ import Bikes from "./layouts/Bikes.vue";
 import Produtos from "./layouts/Produtos.vue";
 import Blog from "./layouts/Blog.vue";
 import Eventos from "./layouts/Eventos.vue";
+import Garantia from "./layouts/Garantia.vue";
+import Contatos from "./layouts/Contatos.vue";
+import Registros from "./layouts/Registros.vue";
 import Menu from "./comuns/Menu.vue";
 
 export default {
@@ -46,6 +64,9 @@ export default {
     Eventos,
     Menu,
     Bikes,
+    Garantia,
+    Contatos,
+    Registros,
   },
   data: () => ({
     menuNav: [
@@ -54,6 +75,11 @@ export default {
       { label: "Produtos" },
       { label: "Blog" },
       { label: "Eventos" },
+    ],
+    formNav: [
+      { label: "Garantia" },
+      { label: "Contatos" },
+      { label: "Registros" },
     ],
     conteudo: "Home",
   }),

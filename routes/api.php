@@ -22,3 +22,6 @@ Route::apiResource('eventos', 'App\Http\Controllers\EventosController');
 Route::apiResource('posts', 'App\Http\Controllers\PostController');
 Route::apiResource('bikes', 'App\Http\Controllers\BikesController');
 Route::apiResource('produtos', 'App\Http\Controllers\ProdutosController');
+Route::apiResource('contatos', 'App\Http\Controllers\ContatosController');
+Route::apiResource('registros', 'App\Http\Controllers\RegistrosController');
+Route::apiResource('suporte', 'App\Http\Controllers\SuporteGarantiaController');

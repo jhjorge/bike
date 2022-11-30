@@ -55,7 +55,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto navigation">
-                            <p class="m-2">bikes</p>
+                            <a class="m-2 text-light" href=" {{ route('bikes') }}">bikes</a>
                             <p class="m-2">acessórios</p>
                             <p class="m-2">componentes</p>
                             <p class="m-2">vestuário</p>

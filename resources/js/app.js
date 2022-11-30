@@ -45,6 +45,12 @@ import Table from './components/comuns/Table.vue';
 app.component('tabela-component', Table);
 import Bikes from './components/layouts/Bikes.vue';
 app.component('bikes-component', Bikes);
+import Garantia from './components/layouts/Garantia.vue';
+app.component('garantia-component', Garantia);
+import Contatos from './components/layouts/Contatos.vue';
+app.component('contatos-component', Contatos);
+import Registros from './components/layouts/Registros.vue';
+app.component('registros-component', Registros);
 
 
 /**
