@@ -53,6 +53,7 @@ import Registros from './components/layouts/Registros.vue';
 app.component('registros-component', Registros);
 
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

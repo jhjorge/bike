@@ -30,6 +30,7 @@ class StoreProdutosRequest extends FormRequest
             'cor' => 'max:100',
             'tamanho' => 'max:100',
             'thumb' => 'required|mimes:png,jpg,jpeg',
+            'banner' => 'required|mimes:png,jpg,jpeg',
         ];
     }
     public function messages()

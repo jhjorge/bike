@@ -13,6 +13,7 @@ class Bikes extends Model
         'content',
         'thumb',
         'gallery',
+        'banner',
         'descricao',
         'quadro',
         'garfo',

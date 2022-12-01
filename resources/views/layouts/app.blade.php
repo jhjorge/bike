@@ -21,9 +21,9 @@
 <body>
     <div id="app">
         <div>
-            <div class="ms-auto top-menu jusitfy-content-center">
+            <div class="ms-auto m-0 p-0 top-menu jusitfy-content-center row">
 
-                <div class=" top-menu-navigation">
+                <div class=" top-menu-navigation col-md-8">
                     <a href=" {{ route('sobre') }}">Sobre</a>
                     <a href="{{ route('suporte') }}">Suporte e garantia</a>
                     <a href="{{ route('blog') }}">Blog</a>
@@ -33,7 +33,7 @@
                     <a href="{{ route('registroBike') }}">Registre sua bike</a>
 
                 </div>
-                <div class="d-flex justify-content center top-menu-social-midia">
+                <div class="d-none justify-content d-md-flex center top-menu-social-midia col-1">
                     <i class="bi bi-facebook"></i>
                     <i class="bi bi-instagram"></i>
                     <i class="bi bi-whatsapp"></i>
@@ -56,9 +56,9 @@
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav me-auto navigation">
                             <a class="m-2 text-light" href=" {{ route('bikes') }}">bikes</a>
-                            <p class="m-2">acessórios</p>
-                            <p class="m-2">componentes</p>
-                            <p class="m-2">vestuário</p>
+                            <a class="m-2 text-light" href=" {{ route('acessorios') }}">acessórios</a>
+                            <a class="m-2 text-light" href=" {{ route('componentes') }}">componentes</a>
+                            <a class="m-2 text-light" href=" {{ route('vestuario') }}">vestuário</a>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

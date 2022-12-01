@@ -57,8 +57,10 @@ class BikesController extends Controller
         //return response()->json($request, 404);
         //$imageGallery_urn = "";
         $imageThumb = $request->file('thumb');
+        $imageBanner = $request->file('banner');
         $imageGallery = $request->file('gallery');
         $imagen_urn = $imageThumb->store('imagens', 'public');
+        $banner_urn = $imageBanner->store('imagens', 'public');
 
         if ($request->file('gallery')) {
             foreach ($imageGallery as $file) {
@@ -97,6 +99,7 @@ class BikesController extends Controller
             'content' => $request->content,
             'gallery' => $img,
             'thumb' => $imagen_urn,
+            'banner' => $banner_urn,
         ]));
         return response()->json($bikes, 201);
     }
@@ -139,6 +142,12 @@ class BikesController extends Controller
                 $imagem = $request->file('thumb');
                 $imagem_urn = $imagem->store('imagens', 'public');
                 $bikes->thumb = $imagem_urn;
+            }
+            if ($request->file('banner')) {
+                Storage::delete($imgInfo->banner);
+                $caminho = $request->file('banner');
+                $banner_urn = $caminho->store('imagens', 'public');
+                $bikes->banner = $banner_urn;
             }
 
             if ($request->file('gallery')) {

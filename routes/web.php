@@ -21,10 +21,16 @@ Auth::routes();
 
 
 Route::get('/bikes', [App\Http\Controllers\BikesFrontController::class, 'index'])->name('bikes');
+
 Route::get('/bike/{id}', [App\Http\Controllers\BikesFrontController::class, 'show'])->name('bike.interno');
 
 
-
+Route::get('/acessorios', [App\Http\Controllers\ProdutosFrontController::class, 'acessorios'])->name('acessorios');
+Route::get('/componentes', [App\Http\Controllers\ProdutosFrontController::class, 'componentes'])->name('componentes');
+Route::get('/vestuario', [App\Http\Controllers\ProdutosFrontController::class, 'vestuario'])->name('vestuario');
+Route::get('/componente/{id}', [App\Http\Controllers\ProdutosFrontController::class, 'showComponente'])->name('componente.interno');
+Route::get('/acessorio/{id}', [App\Http\Controllers\ProdutosFrontController::class, 'showAcessorio'])->name('acessorio.interno');
+Route::get('/vestuario/{id}', [App\Http\Controllers\ProdutosFrontController::class, 'showVestuario'])->name('vestuario.interno');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/painel', [App\Http\Controllers\PainelController::class, 'index'])->name('painel');

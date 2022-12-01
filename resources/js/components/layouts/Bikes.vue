@@ -295,6 +295,11 @@
           accept=”image/*” type="file" id="formFileStoreThumb" />
         </div>
         <div class="mb-3">
+          <label for="formFileBanner" class="form-label">Banner</label>
+          <input @change="carregarImgBanner($event)" class="form-control"
+          accept=”image/*” type="file" id="formFileStoreBanner" />
+        </div>
+        <div class="mb-3">
           <label for="formFileStoreEvent" class="form-label"
             >Galeria de fotos</label
           >
@@ -336,7 +341,17 @@
       titulo="Galeria"
     >
       <template v-slot:conteudo>
-        <div class="mb-3">
+        <div class="row my-2">
+          <h2 class="h4 my-2">Banner</h2>
+          <img
+            :src="'/storage/' + objInfo.banner"
+            class="img-fluid"
+            style="max-width: 50rem"
+          />
+        </div>
+        <div class="mb-3 row">
+          <h2 class="h4 my-2">Fotos</h2>
+
           <div class="card">
             <div class="card-body container">
               <img
@@ -650,6 +665,7 @@
             rows="4"
           ></textarea>
         </div>
+
         <div class="mb-3">
           <label for="formFileStoreEventEdit" class="form-label"
             >Alter Imagem de Destaque?</label
@@ -657,6 +673,15 @@
           <input @change="carregarImg($event)" class="form-control"
           accept=”image/*” type="file" id="formFileStoreEventEdit" />
         </div>
+
+        <div class="mb-3">
+          <label for="formFileStoreBannerEdit" class="form-label"
+            >Alter Banner?</label
+          >
+          <input @change="carregarImgBanner($event)" class="form-control"
+          accept=”image/*” type="file" id="formFileStoreBannerEdit" />
+        </div>
+
         <div class="mb-3">
           <label for="atualizaformFile" class="form-label"
             >Alter Galeria de fotos?</label
@@ -664,6 +689,7 @@
           <input @change="carregarImgGaleria($event)" class="form-control"
           type="file" accept=”image/*” multiple id="atualizaformFile" />
         </div>
+
       </template>
       <template v-slot:footerModal>
         <div class="modal-footer">
@@ -1585,7 +1611,7 @@ export default {
   },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/bikes",
+    urlPosts: "http://127.0.0.1:8000/api/bikes",
     posts: { data: [] },
     loading: true,
     loader: false,
@@ -1615,6 +1641,7 @@ export default {
     pesoBike: "",
     observacaoBike: "",
     descricaoBike: "",
+    bannerBike: "",
 
     tituloPost: "",
     conteudoPost: "",
@@ -1703,6 +1730,9 @@ export default {
       if (this.imagemPost[0]) {
         formData.append("thumb", this.imagemPost[0]);
       }
+      if (this.bannerPost[0]) {
+        formData.append("banner", this.bannerPost[0]);
+      }
       if (this.imagemGaleriaPost) {
         console.log("Criando o objeto");
         let imagens = this.imagemGaleriaPost;
@@ -1778,7 +1808,10 @@ export default {
       this.descricaoBike = "";
       this.conteudoPost = "";
       this.imagemPost = "";
+      this.bannerPost = "";
       this.imagemGaleriaPost = [];
+      formFileStoreBannerEdit.value = "";
+      formFileStoreBanner.value = "";
       formFileStoreEvent.value = "";
       formFileStoreThumb.value = "";
       atualizaformFile.value = "";
@@ -1793,7 +1826,7 @@ export default {
       formData.append("movimentoDirecao", this.movimentoDirecaoBike);
       formData.append("guidao", this.guidaoBike);
       formData.append("manopla", this.manoplaBike);
-      formData.append("freio", this.freiobike);
+      formData.append("freio", this.freioBike);
       formData.append("aro", this.aroBike);
       formData.append("cubo", this.cuboBike);
       formData.append("pneu", this.pneuBike);
@@ -1812,6 +1845,7 @@ export default {
       formData.append("observacao", this.observacaoBike);
       formData.append("content", this.conteudoPost);
       formData.append("thumb", this.imagemPost[0]);
+      formData.append("banner", this.bannerPost[0]);
       if (this.imagemGaleriaPost) {
         console.log("Criando o objeto");
         let imagens = this.imagemGaleriaPost;
@@ -1901,6 +1935,11 @@ export default {
     carregarImg(e) {
       if (e.target.files) {
         this.imagemPost = e.target.files;
+      }
+    },
+    carregarImgBanner(e) {
+      if (e.target.files) {
+        this.bannerPost = e.target.files;
       }
     },
 
