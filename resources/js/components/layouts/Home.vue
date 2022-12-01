@@ -237,10 +237,10 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "http://127.0.0.1:8000/api/posts?valor=3",
-    urlEventos: "http://127.0.0.1:8000/api/eventos?valor=3",
-    urlBikes: "http://127.0.0.1:8000/api/bikes?valor=3",
-    urlProdutos: "http://127.0.0.1:8000/api/produtos?valor=3",
+    urlPosts: "https://goodnine.com.br/api/posts?valor=3",
+    urlEventos: "https://goodnine.com.br/api/eventos?valor=3",
+    urlBikes: "https://goodnine.com.br/api/bikes?valor=3",
+    urlProdutos: "https://goodnine.com.br/api/produtos?valor=3",
     posts: { data: [] },
     eventos: { data: [] },
     bikes: { data: [] },

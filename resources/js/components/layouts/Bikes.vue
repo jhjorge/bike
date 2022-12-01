@@ -689,7 +689,6 @@
           <input @change="carregarImgGaleria($event)" class="form-control"
           type="file" accept=”image/*” multiple id="atualizaformFile" />
         </div>
-
       </template>
       <template v-slot:footerModal>
         <div class="modal-footer">
@@ -1611,7 +1610,7 @@ export default {
   },
 
   data: () => ({
-    urlPosts: "http://127.0.0.1:8000/api/bikes",
+    urlPosts: "https://goodnine.com.br/api/bikes",
     posts: { data: [] },
     loading: true,
     loader: false,
