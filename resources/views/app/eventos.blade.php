@@ -6,9 +6,9 @@
     <div class="container my-4">
         <h1>Eventos</h1>
         <div class="row">
-            <div class="my-4 blog-view">
+            <div class="my-4 blog-view" style="height: 60vh">
                 @forelse($eventos as $evento)
-                    <div class="card blog-view-post" style="width: 18rem;">
+                    <div class="card blog-view-post my-4" style="width: 18rem;">
                         <a href="{{ route('evento', $evento->id) }}">
                             <img class="card-img-top" src="{{ asset('img/evento.jpg') }}" alt="Card image cap">
                             <div class="card-body">

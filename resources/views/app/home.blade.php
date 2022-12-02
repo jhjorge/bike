@@ -24,7 +24,7 @@
 
     </div>
     <div class="gallery-container my-4 row m-0" style="height: 80vh">
-        <div class="gallery-container-top col-md-5">
+        <div class="gallery-container-top col-md-8">
             <div class="row m-0">
                 <h2>Conheça nossos produtos</h2>
             </div>
