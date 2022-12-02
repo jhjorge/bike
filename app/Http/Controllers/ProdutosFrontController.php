@@ -48,4 +48,14 @@ class ProdutosFrontController extends Controller
 
         return view('products.acessorioInterno', ['produto' => $id]);
     }
+    public function showComponente(Produtos $id)
+    {
+
+        return view('products.componenteInterno', ['produto' => $id]);
+    }
+    public function showVestuario(Produtos $id)
+    {
+
+        return view('products.vestuarioInterno', ['produto' => $id]);
+    }
 }

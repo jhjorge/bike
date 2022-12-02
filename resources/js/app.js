@@ -51,6 +51,11 @@ import Contatos from './components/layouts/Contatos.vue';
 app.component('contatos-component', Contatos);
 import Registros from './components/layouts/Registros.vue';
 app.component('registros-component', Registros);
+import Gallery from './components/frontend/Gallery.vue';
+app.component('produtosgallery-component', Gallery);
+import Conteudo from './components/frontend/Conteudo.vue';
+app.component('conteudo-component', Conteudo);
+
 
 
 

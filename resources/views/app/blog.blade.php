@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <div class="my-4 container">
+    <div class="my-4 container" style="height: 60vh">
         <div class="row">
             <h1>Blog</h1>
             <div class="row">
@@ -25,5 +25,17 @@
 
                 </div>
 
+
             </div>
-        @endsection
+
+
+
+        </div>
+        <div class="row mt-4">
+            <div class="col btn-group">
+                {{ $posts->onEachSide(5)->links() }}
+            </div>
+        </div>
+
+    </div>
+@endsection

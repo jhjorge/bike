@@ -31,6 +31,11 @@
 
 
         </div>
+        <div class="row mt-4">
+            <div class="col btn-group">
+                {{ $eventos->onEachSide(5)->links() }}
+            </div>
+        </div>
     </div>
 
 @endsection

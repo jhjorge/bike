@@ -625,7 +625,7 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "http://127.0.0.1:8000/api/eventos",
+    urlPosts: "https://goodnine.com.br/api/eventos",
     posts: { data: [] },
     loading: true,
     loader: false,

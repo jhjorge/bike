@@ -19,10 +19,30 @@ class RegistrosController extends Controller
     {
         $this->registro = $registros;
     }
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $registros = array();
+
+
+
+
+        if ($request->has('filtro')) {
+            $registros = explode(';', $request->filtro);
+
+            foreach ($registros as $key => $condicao) {
+                $c = explode(':', $condicao);
+                $registros = $this->registro::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
+            }
+        } elseif ($request->has('valor')) {
+            $cont = $request->valor;
+            $registros =  Registros::orderBy('id', 'desc')->paginate($cont);
+        } else {
+            $registros = Registros::orderBy('id', 'desc')->paginate(10);
+        }
+
+        return response()->json($registros, 200);
     }
+
 
 
 

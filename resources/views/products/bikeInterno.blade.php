@@ -2,7 +2,7 @@
 @section('titulo', $bike->title)
 
 @section('content')
-    <div class="row m-0 p-0 banner-bike">
+    <div class="row my-5 mx-0 p-0 banner-bike">
 
 
 

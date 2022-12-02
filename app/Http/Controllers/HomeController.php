@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Bikes;
+use App\Models\Produtos;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,9 +13,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Produtos $produtos, Bikes $bikes)
     {
         // $this->middleware('auth');
+        $this->bikes = $bikes;
+        $this->produtos = $produtos;
     }
 
     /**
@@ -22,10 +25,32 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $produtos = array();
+
+        if ($request->has('Bikes')) {
+            $produtos = $this->bikes::inRandomOrder()->paginate(6);
 
 
-        return view('app.home',);
+            return view('app.home', ['produtos' => $produtos, 'request' => $request]);
+        } elseif ($request->has('Acessorios')) {
+
+            $produtos = $this->produtos::where('categoria_id', 1)->orderby('id', 'desc')->paginate(6);
+
+            return view('app.home', ['produtos' => $produtos, 'request' => $request]);
+        } elseif ($request->has('Componentes')) {
+
+            $produtos = $this->produtos::where('categoria_id', 2)->orderby('id', 'desc')->paginate(6);
+
+            return view('app.home', ['produtos' => $produtos, 'request' => $request]);
+        } elseif ($request->has('Vestuarios')) {
+
+            $produtos = $this->produtos::where('categoria_id', 3)->orderby('id', 'desc')->paginate(6);
+
+            return view('app.home', ['produtos' => $produtos, 'request' => $request]);
+        }
+        $produtos = $this->bikes::inRandomOrder()->paginate(6);
+        return view('app.home', ['produtos' => $produtos, 'request' => $request]);
     }
 }

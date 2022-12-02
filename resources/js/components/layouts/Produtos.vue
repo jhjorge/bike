@@ -52,7 +52,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="selectCategory" class="form-label">Catgeoria</label>
+          <label for="selectCategory" class="form-label">Categeoria</label>
           <select
             id="selectCategory"
             class="form-select"

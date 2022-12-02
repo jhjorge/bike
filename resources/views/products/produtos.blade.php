@@ -21,10 +21,18 @@
                         </div>
 
                     @empty
-                        <h2>Nenhum Post encontrado!</h2>
+                        <h2>Nenhum Produto encontrado!</h2>
                     @endforelse
 
                 </div>
 
             </div>
-        @endsection
+        </div>
+        <div class="row mt-4">
+            <div class="col btn-group">
+                {{ $produtos->onEachSide(5)->links() }}
+            </div>
+        </div>
+
+    </div>
+@endsection

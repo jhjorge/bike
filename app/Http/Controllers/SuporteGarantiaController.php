@@ -92,7 +92,7 @@ class SuporteGarantiaController extends Controller
      */
     public function update(UpdateSuporteRequest $request, $id)
     {
-        $suporte = $this->registro->find($id);
+        $suporte = $this->suporte->find($id);
         if ($suporte == null) {
             return response()->json(['erro' => 'Impossivel realizar a alteração. O recurso solicitado não existe'], 404);
         } else {
@@ -117,7 +117,7 @@ class SuporteGarantiaController extends Controller
             } else {
 
                 $suporte->delete();
-                return response()->json(['msg' => 'O post removido com sucesso!'], 200);
+                return response()->json(['msg' => 'O registro foi removido com sucesso!'], 200);
             }
         }
     }

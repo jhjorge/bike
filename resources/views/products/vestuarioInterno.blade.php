@@ -2,7 +2,7 @@
 @section('titulo', $produto->title)
 
 @section('content')
-    <div class="row m-0 my-5 py-5 container d-flex align-itens-center justify-content-center">
+    <div class="row m-0 my-5 py-5 container d-flex align-itens-center justify-content-center" style="height: 60vh">
 
         <div class="col-md-6">
             <div class="row m-0">

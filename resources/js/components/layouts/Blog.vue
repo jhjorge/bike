@@ -657,7 +657,7 @@ export default {
           this.errored = true;
           this.urlPaginacao = "";
           this.urlFiltro = "";
-          this.urlPosts = "http://localhost:8000/api/posts";
+          this.urlPosts = "https://goodnine.com.br/api/posts";
         })
         .finally(() => (this.loading = false));
     },
