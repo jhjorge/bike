@@ -50,7 +50,7 @@
                     </h3>
                 </a>
             </div>
-            <div class="row card-deck" style="">
+            <div class="row h-50 " style="">
                 @if ($request->has('Bikes'))
 
                     @foreach ($produtos as $item)
