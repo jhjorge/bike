@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
-            $table->string('tamanho');
-            $table->string('cor');
-            $table->text('descricao');
-            $table->text('content');
-            $table->text('observacao');
+            $table->json('tamanho');
+            $table->json('cor');
+            $table->json('descricao');
             $table->string('thumb');
             $table->json('gallery');
             $table->timestamps();

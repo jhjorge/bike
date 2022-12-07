@@ -18,29 +18,20 @@
 
 .gallery-container
     display: flex
-    flex-direction: column
-    background-color: variables.$primary-color
-    padding: 8px
-    margin-top: 8px
-    height: 400px
+    justify-content: center
+    align-content: center
+    background-color: #000
+.title-gallery
+    text-align: center
+    color: #fff
 
-    &-top, h2
-        justify-content: center
-        text-align: center
+.btn-gallery
+    background-color: #DF1928
+    margin: 1rem
+    h3
         color: #fff
-
-        &-nav
-            display: flex
-            justify-content: space-between
-            h3
-                margin: 8px
-                background-color: variables.$button
-                color: #fff
-                padding: 8px
-                cursor: pointer
-                font-size: 1rem
-                text-transform: uppercase
-
-                &:hover
-                    color: variables.$secondary-color
-                    background-color: variables.$button
+        text-align: center
+        font-size: 1.2rem
+.card-text-gallery
+    color: #fff
+    padding: 0.4rem

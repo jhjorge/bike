@@ -2,35 +2,30 @@
 @section('titulo', $bike->title)
 
 @section('content')
-    <div class="row my-5 mx-0 p-0 banner-bike">
-
-
-
-
-
+    <div class="banner-bike mx-0">
         <img src="{{ asset('storage/' . $bike->banner) }}" class="img-fluid" alt="...">
-
-        <h2 class="title-bike my-2 text-uppercase">{{ $bike->title }}</h5>
-
-
     </div>
-    <div class="row my-4">
-        <div class="col-md-6">
-            <img src="{{ asset('storage/' . $bike->thumb) }}" class="img-fluid" alt="">
+    <div class="container my-3 col-md-9">
+        <div class="row m-0">
+            <h2 class="title-bike my-5 text-uppercase">{{ $bike->title }}</h5>
         </div>
-    </div>
+        <div class="row my-4">
+            <div class="col justify-content center d-flex">
+                <img src="{{ asset('storage/' . $bike->thumb) }}" class="img-fluid" alt="">
+            </div>
+        </div>
 
 
-
-    <div class="container my-3 col-md-9 mt-5">
-        <div class="container gallery-img">
+        <div class="row gallery-img">
 
 
             @foreach ($bike->gallery as $img)
-                <div class="col-md-3 col-6 my-2 d-flex justify-content-center">
+                <div class="col-md-3 col-4 my-2 d-flex justify-content-center">
                     <picture>
-                        <source srcset="" type="image/svg+xml">
-                        <img src="{{ asset('storage/' . $img) }}" class="img-fluid img-thumbnail">
+                        <a class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <source srcset="" type="image/svg+xml">
+                            <img src="{{ asset('storage/' . $img) }}" class="img-fluid img-thumbnail">
+                        </a>
                     </picture>
 
                 </div>
@@ -175,4 +170,52 @@
         </div>
 
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Galeria de Fotos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+
+                    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+
+                            @foreach ($bike->gallery as $img)
+                                @if ($img == $bike->gallery[0])
+                                    <div class="carousel-item active">
+                                        <img src="{{ asset('storage/' . $img) }}" class="d-block w-100" alt="...">
+                                    </div>
+                                @else
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('storage/' . $img) }}" class="d-block w-100" alt="...">
+                                    </div>
+                                @endif
+                            @endforeach
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection

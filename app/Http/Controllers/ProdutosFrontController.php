@@ -17,7 +17,7 @@ class ProdutosFrontController extends Controller
 
 
 
-        $produtos = $this->produto::where('categoria_id', 1)->orderby('id', 'desc')->paginate(10);
+        $produtos = $this->produto::where('categoria_id', 1)->orderby('id', 'desc')->paginate(8);
 
 
         return view('products.acessorios', ['produtos' => $produtos]);
@@ -28,7 +28,7 @@ class ProdutosFrontController extends Controller
 
 
 
-        $produtos = $this->produto::where('categoria_id', 2)->orderby('id', 'desc')->paginate(10);
+        $produtos = $this->produto::where('categoria_id', 2)->orderby('id', 'desc')->paginate(8);
 
 
         return view('products.componentes', ['produtos' => $produtos]);
@@ -38,7 +38,7 @@ class ProdutosFrontController extends Controller
 
 
 
-        $produtos = $this->produto::where('categoria_id', 3)->orderby('id', 'desc')->paginate(10);
+        $produtos = $this->produto::where('categoria_id', 3)->orderby('id', 'desc')->paginate(8);
 
 
         return view('products.vestuario', ['produtos' => $produtos]);

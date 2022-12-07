@@ -77,9 +77,7 @@ class ProdutosController extends Controller
             'categoria_id' => $request->categoria_id,
             'tamanho' => $request->tamanho,
             'cor' => $request->cor,
-            'observacao' => $request->observacao,
             'descricao' => $request->descricao,
-            'content' => $request->content,
             'gallery' => $img,
             'thumb' => $imagen_urn,
         ]));

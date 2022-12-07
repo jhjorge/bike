@@ -25,8 +25,7 @@ class StoreProdutosRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:50',
-            'descricao' => 'required|min:10|max:2000',
-            'content' => 'required|min:10|max:2000',
+            'descricao' => 'min:10|max:2000',
             'cor' => 'max:100',
             'tamanho' => 'max:100',
             'thumb' => 'required|mimes:png,jpg,jpeg',

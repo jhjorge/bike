@@ -25,13 +25,13 @@ class BikesFrontController extends Controller
 
             foreach ($bikes as $key => $condicao) {
                 $c = explode(':', $condicao);
-                $bikes = $this->post::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
+                $bikes = $this->post::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(8);
             }
         } elseif ($request->has('valor')) {
             $cont = $request->valor;
             $bikes =  Bikes::orderBy('id', 'desc')->paginate($cont);
         } else {
-            $bikes = Bikes::orderBy('id', 'desc')->paginate(10);
+            $bikes = Bikes::orderBy('id', 'desc')->paginate(8);
         }
 
         return view('products.bike', ['bikes' => $bikes]);

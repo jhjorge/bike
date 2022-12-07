@@ -28,26 +28,78 @@
             id="tituloEventoModal"
           />
         </div>
-        <div class="row mb-3">
-          <div class="col">
-            <label class="form-label" for="tamanhoPostCreate">Tamanho</label>
-
-            <input
-              v-model="tamanhoPost"
-              type="input"
-              id="tamanhoPostCreate"
-              class="mb-3 form-control"
-            />
+        <div class="mb-3">
+          <label for="conteudoPostModal" class="form-label">Tamanho</label>
+          <div class="card p-2">
+            <ul class="row">
+              <li class="col" v-for="item in tamanhoPost" :key="item.id">
+                <span class="badge bg-primary">{{ item.tamanho }}</span>
+              </li>
+            </ul>
           </div>
-          <div class="col">
-            <label class="form-label" for="meeting-time">Cor</label>
-
+          <div class="input-group mb-3 mt-1">
             <input
-              v-model="corPost"
-              type="input"
-              id="meeting-time"
-              class="mb-3 form-control"
+              type="text"
+              v-model="tamanhoTemp"
+              class="form-control"
+              id="tamahoTempProdutos"
+              placeholder="Incluir tamanho"
+              aria-label="Incluir tamanho"
+              aria-describedby="basic-addon2"
             />
+            <div class="input-group-append btn-group" role="group">
+              <button
+                class="btn btn-sm btn-primary col"
+                @click.prevent="inclurTamanho(tamanhoTemp)"
+                type="button"
+              >
+                Adicionar
+              </button>
+              <button
+                class="btn btn-sm btn-danger col"
+                @click.prevent="removerTamanho()"
+                type="button"
+              >
+                Remover o Ultimo
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="conteudoPostModal" class="form-label">Cor</label>
+          <div class="card p-2">
+            <ul class="row">
+              <li class="col" v-for="item in corPost" :key="item.id">
+                <span class="badge bg-primary">{{ item.cor }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="input-group mb-3 mt-1">
+            <input
+              type="text"
+              v-model="corTemp"
+              class="form-control"
+              id="tamahoTempProdutos"
+              placeholder="Incluir Cor"
+              aria-label="Incluir Cor"
+              aria-describedby="basic-addon2"
+            />
+            <div class="input-group-append btn-group" role="group">
+              <button
+                class="btn btn-sm btn-primary col"
+                @click.prevent="inclurCor(corTemp)"
+                type="button"
+              >
+                Adicionar
+              </button>
+              <button
+                class="btn btn-sm btn-danger col"
+                @click.prevent="removerCor()"
+                type="button"
+              >
+                Remover o Ultimo
+              </button>
+            </div>
           </div>
         </div>
 
@@ -70,33 +122,39 @@
           <label for="conteudoPostModal" class="form-label"
             >Descrição do Produto</label
           >
+          <div class="row">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Titulo</span>
+              <input
+                type="text"
+                class="form-control"
+                v-model="tituloTemp"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+          </div>
           <textarea
-            v-model="descricaoPost"
+            v-model="descricaoTemp"
             class="form-control"
             id="conteudoPostModalThumb"
             rows="4"
           ></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="conteudoPostModal" class="form-label"
-            >Conteudo do Produto</label
+          <input
+            class="btn btn-primary my-2"
+            type="submit"
+            value="Inclur Descrição"
+            @click.prevent="incluirDescricao(tituloTemp, descricaoTemp)"
+          />
+          <button
+            type="button"
+            class="btn mx-md-1 mt-2 mt-md-0 btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#modalDescricoes"
           >
-          <textarea
-            v-model="conteudoPost"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="4"
-          ></textarea>
+            Visualizar Descrições
+          </button>
         </div>
-        <div class="mb-3">
-          <label for="conteudoPostModal" class="form-label">Obervação</label>
-          <textarea
-            v-model="observacaoPost"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="3"
-          ></textarea>
-        </div>
+
         <div class="mb-3">
           <label for="formFileStore" class="form-label"
             >Imagem de Destaque</label
@@ -136,6 +194,58 @@
 
             Concluir
           </button>
+        </div>
+      </template>
+    </modal-component>
+    <!--Modal Conteudo-->
+    <modal-component id="modalDescricoes" titulo="Descrições">
+      <template v-slot:conteudo>
+        <div class="col">
+          <div class="accordion" id="accordionExample" v-if="descricaoPost">
+            <div
+              class="accordion-item"
+              v-for="item in descricaoPost"
+              :key="item.id"
+            >
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  {{ item.titulo }}
+                </button>
+              </h2>
+
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body container">
+                  <span>
+                    {{ item.conteudo }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-primary"
+              data-bs-target="#modalEvento"
+              data-bs-toggle="modal"
+              data-bs-dismiss="modal"
+            >
+              Voltar</button
+            ><button class="btn btn-primary" @click="removeDescricao()">
+              Exlucir o Ultimo
+            </button>
+          </div>
         </div>
       </template>
     </modal-component>
@@ -205,26 +315,45 @@
             id="tituloEventoModal"
           />
         </div>
-        <div class="row mb-3">
-          <div class="col">
-            <label class="form-label" for="tamanhoPostCreate">Tamanho</label>
+        <div class="mb-3">
+          <label for="conteudoPostModal" class="form-label">Tamanhos</label>
+          <textarea
+            v-model="tamanhoPost"
+            class="form-control"
+            id="conteudoPostModalThumb"
+            rows="2"
+          ></textarea>
 
+          <div class="input-group mb-3">
             <input
-              v-model="objInfo.tamanho"
-              type="input"
-              id="tamanhoPostCreate"
-              class="mb-3 form-control"
+              type="text"
+              class="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
             />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                Adicionar
+              </button>
+              <button class="btn btn-outline-secondary" type="button">
+                Remover Ultimo
+              </button>
+            </div>
           </div>
-          <div class="col">
-            <label class="form-label" for="meeting-time">Cor</label>
-
+          <div class="input-group mb-3">
             <input
-              v-model="objInfo.cor"
-              type="input"
-              id="meeting-time"
-              class="mb-3 form-control"
+              type="text"
+              class="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
             />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                Adicionar
+              </button>
+            </div>
           </div>
         </div>
 
@@ -263,15 +392,6 @@
             class="form-control"
             id="conteudoPostModalThumb"
             rows="4"
-          ></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="conteudoPostModal" class="form-label">Obervação</label>
-          <textarea
-            v-model="objInfo.observacao"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="3"
           ></textarea>
         </div>
         <div class="mb-3">
@@ -682,19 +802,22 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/produtos",
+    urlPosts: "http://127.0.0.1:8000/api/produtos",
     posts: { data: [] },
     loading: true,
     loader: false,
     errored: false,
+    descricaoTemp: "",
+    descricaoPost: [],
+    tituloTemp: "",
+
+    tamanhoTemp: "",
+    corTemp: "",
 
     tituloPost: "",
     catgeoriaPost: "",
-    tamanhoPost: "",
-    corPost: "",
-    descricaoPost: "",
-    observacaoPost: "",
-    conteudoPost: "",
+    tamanhoPost: [],
+    corPost: [],
     imagemPost: [],
     imagemGaleriaPost: [],
     objetoGaleria: [],
@@ -708,6 +831,47 @@ export default {
   }),
 
   methods: {
+    incluirDescricao(title, descri) {
+      if (this.tituloTemp && this.descricaoTemp) {
+        console.log("cheguei");
+        this.descricaoPost.push({ titulo: title, conteudo: descri });
+        this.tituloTemp = "";
+        this.descricaoTemp = "";
+        console.log(this.descricaoPost);
+      }
+
+      console.log("fORA");
+    },
+
+    removerTamanho() {
+      if (this.tamanhoPost) {
+        this.tamanhoPost.pop();
+      }
+    },
+    removeDescricao() {
+      if (this.descricaoPost) {
+        this.descricaoPost.pop();
+      }
+    },
+    removerCor() {
+      if (this.corPost) {
+        this.corPost.pop();
+      }
+    },
+
+    inclurTamanho(item) {
+      if (this.tamanhoTemp) {
+        this.tamanhoPost.push({ tamanho: item });
+        this.tamanhoTemp = "";
+      }
+    },
+    inclurCor(item) {
+      if (this.corTemp) {
+        this.corPost.push({ cor: item });
+        this.corTemp = "";
+      }
+    },
+
     categoriaView(obj) {
       if (obj !== null) {
         if (obj == 1) {
@@ -838,20 +1002,26 @@ export default {
       let formData = new FormData();
       formData.append("title", this.tituloPost);
       formData.append("categoria_id", this.categoriaPost);
-      formData.append("tamanho", this.tamanhoPost);
-      formData.append("cor", this.corPost);
-      formData.append("observacao", this.observacaoPost);
-      formData.append("descricao", this.descricaoPost);
-      formData.append("content", this.conteudoPost);
       formData.append("thumb", this.imagemPost[0]);
+      for (let i = 0; i < this.tamanhoPost; i++) {
+        formData.append("tamanho[]", this.tamanhoPost[i]);
+        console.log(this.tamanhoPost[i]);
+      }
+
+      for (let i = 0; i < this.corPost; i++) {
+        formData.append("cor[]", this.corPost[i]);
+      }
+      for (let i = 0; i < this.descricaoPost; i++) {
+        formData.append("descricao[]", this.descricaoPost[i]);
+      }
+
       if (this.imagemGaleriaPost) {
-        console.log("Criando o objeto");
         let imagens = this.imagemGaleriaPost;
         for (let i = 0; i < imagens.length; i++) {
           formData.append("gallery[]", imagens[i]);
-          console.log(formData.getAll("gallery[]"));
         }
       }
+      console.log(formData);
       let config = {
         Headers: {
           "Content-Type": "multipart/form-data",
