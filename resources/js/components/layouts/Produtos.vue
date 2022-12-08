@@ -60,7 +60,7 @@
                 @click.prevent="removerTamanho()"
                 type="button"
               >
-                Remover o Ultimo
+                Remover o Último
               </button>
             </div>
           </div>
@@ -97,7 +97,7 @@
                 @click.prevent="removerCor()"
                 type="button"
               >
-                Remover o Ultimo
+                Remover o Último
               </button>
             </div>
           </div>
@@ -257,7 +257,7 @@
     >
       <template v-slot:conteudo>
         <div class="col">
-          <div class="accordion" id="accordionExample" v-if="descricaoPost">
+          <div class="accordion" id="accordionExample" v-if="objInfo">
             <div
               class="accordion-item"
               v-for="item in objInfo.titulo_descricao"
@@ -308,7 +308,7 @@
                 removerAtualiza2(objInfo.titulo_descricao, objInfo.descricao)
               "
             >
-              Exlucir o Ultimo
+              Remover o Último
             </button>
           </div>
         </div>
@@ -412,7 +412,7 @@
                 @click.prevent="removerAtualiza(objInfo.tamanho)"
                 type="button"
               >
-                Remover o Ultimo
+                Remover o Último
               </button>
             </div>
           </div>
@@ -449,7 +449,7 @@
                 @click.prevent="removerAtualiza(objInfo.cor)"
                 type="button"
               >
-                Remover o Ultimo
+                Remover o Último
               </button>
             </div>
           </div>
@@ -508,10 +508,10 @@
             "
           />
           <button
-            type="button"
-            class="btn mx-md-1 mt-2 mt-md-0 btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#modalDescricoesItem"
+            data-keyboard="true"
+            class="btn mx-md-1 mt-2 mt-md-0 btn-secondary"
             @click="setStore(objInfo)"
           >
             Visualizar Descrições
@@ -663,37 +663,55 @@
               v-if="objInfo.thumb"
             />
           </div>
-          <div class="row mb-3">
-            <label for="ContentInfo" class="label form-label">Conteudo</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="4"
-              v-if="objInfo.content"
-            ></textarea>
+          <div class="mb-3">
+            <label for="tituloEventoModal" class="form-label"
+              >Nome do Produto</label
+            >
+            <input
+              v-model="objInfo.title"
+              type="text"
+              class="form-control"
+              id="tituloEventoModal"
+            />
           </div>
-          <div class="row mb-3">
-            <label for="ContentInfo" class="label form-label">Descrição</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.descricao"
-              rows="4"
-              v-if="objInfo.descricao"
-            ></textarea>
+          <div class="mb-3">
+            <label for="conteudoPostModal" class="form-label">Tamanho</label>
+            <div class="card p-2">
+              <ul class="row">
+                <li class="col" v-for="item in objInfo.tamanho" :key="item.id">
+                  <span class="badge bg-primary">{{ item }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="row mb-3">
-            <label for="ContentInfo" class="label form-label">Observação</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.observacao"
-              rows="3"
-              v-if="objInfo.observacao"
-            ></textarea>
+          <div class="mb-3">
+            <label for="conteudoPostModal" class="form-label">Cor</label>
+            <div class="card p-2">
+              <ul class="row">
+                <li class="col" v-for="item in objInfo.cor" :key="item.id">
+                  <span class="badge bg-primary">{{ item }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
+          <div class="mb-3">
+            <label for="selectCategory" class="form-label"
+              >Categoria Atual:
+              <b>{{ categoriaView(objInfo.categoria_id) }}</b></label
+            >
+          </div>
+          <div>
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#modalDescricoesItem"
+              data-keyboard="true"
+              class="btn mx-md-1 mt-2 mt-md-0 btn-secondary"
+              @click="setStore(objInfo)"
+            >
+              Visualizar Descrições
+            </button>
+          </div>
           <div class="row mt-5">
             <div class="col-5" v-if="objInfo.created_at">
               <span class="text-muted"
@@ -926,7 +944,7 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/produtos",
+    urlPosts: "http://127.0.0.1:8000/api/produtos",
     posts: { data: [] },
     loading: true,
     loader: false,

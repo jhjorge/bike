@@ -1610,7 +1610,7 @@ export default {
   },
 
   data: () => ({
-    urlPosts: "https://goodnine.com.br/api/bikes",
+    urlPosts: "http://127.0.0.1:8000/api/bikes",
     posts: { data: [] },
     loading: true,
     loader: false,

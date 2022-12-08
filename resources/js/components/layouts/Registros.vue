@@ -771,14 +771,6 @@
             <button type="button" class="btn btn-secondary" @click="loadList">
               Atualizar
             </button>
-            <button
-              type="button"
-              class="btn mx-md-1 mt-2 mt-md-0 btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalBlog"
-            >
-              Nova Postagem
-            </button>
           </div>
         </div>
       </div>
