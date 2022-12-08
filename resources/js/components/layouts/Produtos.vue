@@ -147,7 +147,7 @@
           />
           <button
             type="button"
-            class="btn mx-md-1 mt-2 mt-md-0 btn-primary"
+            class="btn mx-md-1 mt-2 mt-md-0 btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#modalDescricoes"
           >
@@ -242,7 +242,72 @@
               data-bs-dismiss="modal"
             >
               Voltar</button
-            ><button class="btn btn-primary" @click="removeDescricao()">
+            ><button class="btn btn-danger" @click="removeDescricao()">
+              Exlucir o Ultimo
+            </button>
+          </div>
+        </div>
+      </template>
+    </modal-component>
+    <!--Modal ConteudoItem-->
+    <modal-component
+      id="modalDescricoesItem"
+      titulo="Descrições2"
+      :setInfo="objInfo.data"
+    >
+      <template v-slot:conteudo>
+        <div class="col">
+          <div class="accordion" id="accordionExample" v-if="descricaoPost">
+            <div
+              class="accordion-item"
+              v-for="item in objInfo.titulo_descricao"
+              :key="item.id"
+            >
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  {{ item }}
+                </button>
+              </h2>
+
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div
+                  class="accordion-body container"
+                  v-for="content in objInfo.descricao"
+                  :key="content.id"
+                >
+                  <span>
+                    {{ content }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-primary"
+              data-bs-target="#atualizarPost"
+              data-bs-toggle="modal"
+              data-bs-dismiss="modal"
+            >
+              Voltar</button
+            ><button
+              class="btn btn-danger"
+              @click="
+                removerAtualiza2(objInfo.titulo_descricao, objInfo.descricao)
+              "
+            >
               Exlucir o Ultimo
             </button>
           </div>
@@ -316,56 +381,92 @@
           />
         </div>
         <div class="mb-3">
-          <label for="conteudoPostModal" class="form-label">Tamanhos</label>
-          <textarea
-            v-model="tamanhoPost"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="2"
-          ></textarea>
-
-          <div class="input-group mb-3">
+          <label for="conteudoPostModal" class="form-label">Tamanho</label>
+          <div class="card p-2">
+            <ul class="row">
+              <li class="col" v-for="item in objInfo.tamanho" :key="item.id">
+                <span class="badge bg-primary">{{ item }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="input-group mb-3 mt-1">
             <input
               type="text"
+              v-model="tamanhoTemp"
               class="form-control"
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
+              id="tamahoTempProdutos"
+              placeholder="Incluir tamanho"
+              aria-label="Incluir tamanho"
               aria-describedby="basic-addon2"
             />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
+            <div class="input-group-append btn-group" role="group">
+              <button
+                class="btn btn-sm btn-primary col"
+                @click.prevent="inclurAtualiza(tamanhoTemp, objInfo.tamanho)"
+                type="button"
+              >
                 Adicionar
               </button>
-              <button class="btn btn-outline-secondary" type="button">
-                Remover Ultimo
+              <button
+                class="btn btn-sm btn-danger col"
+                @click.prevent="removerAtualiza(objInfo.tamanho)"
+                type="button"
+              >
+                Remover o Ultimo
               </button>
             </div>
           </div>
-          <div class="input-group mb-3">
+        </div>
+        <div class="mb-3">
+          <label for="conteudoPostModal" class="form-label">Cor</label>
+          <div class="card p-2">
+            <ul class="row">
+              <li class="col" v-for="item in objInfo.cor" :key="item.id">
+                <span class="badge bg-primary">{{ item }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="input-group mb-3 mt-1">
             <input
               type="text"
+              v-model="corTemp"
               class="form-control"
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
+              id="tamahoTempProdutos"
+              placeholder="Incluir Cor"
+              aria-label="Incluir Cor"
               aria-describedby="basic-addon2"
             />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
+            <div class="input-group-append btn-group" role="group">
+              <button
+                class="btn btn-sm btn-primary col"
+                @click.prevent="inclurAtualiza(corTemp, objInfo.cor)"
+                type="button"
+              >
                 Adicionar
+              </button>
+              <button
+                class="btn btn-sm btn-danger col"
+                @click.prevent="removerAtualiza(objInfo.cor)"
+                type="button"
+              >
+                Remover o Ultimo
               </button>
             </div>
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="selectCategory" class="form-label">Catgeoria</label>
+          <label for="selectCategory" class="form-label"
+            >Categeoria Atual:
+            <b>{{ categoriaView(objInfo.categoria_id) }}</b></label
+          >
           <select
             id="selectCategory"
             class="form-select"
             aria-label="Selecione Uma categoria"
-            v-model="objInfo.categoria_id"
+            v-model="categoriaPost"
           >
-            <option default disabled>Selecione uma Categoria</option>
+            <option selected disabled>Alterar Categoria?</option>
             <option value="1">Acessórios</option>
             <option value="2">Componentes</option>
             <option value="3">Vestuário</option>
@@ -376,24 +477,47 @@
           <label for="conteudoPostModal" class="form-label"
             >Descrição do Produto</label
           >
+          <div class="row">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Titulo</span>
+              <input
+                type="text"
+                class="form-control"
+                v-model="tituloTemp"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+          </div>
           <textarea
-            v-model="objInfo.descricao"
+            v-model="descricaoTemp"
             class="form-control"
             id="conteudoPostModalThumb"
             rows="4"
           ></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="conteudoPostModal" class="form-label"
-            >Conteudo do Produto</label
+          <input
+            class="btn btn-primary my-2"
+            type="submit"
+            value="Inclur Descrição"
+            @click.prevent="
+              incluirDescricaoAtualiza(
+                tituloTemp,
+                descricaoTemp,
+                objInfo.titulo_descricao,
+                objInfo.descricao
+              )
+            "
+          />
+          <button
+            type="button"
+            class="btn mx-md-1 mt-2 mt-md-0 btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#modalDescricoesItem"
+            @click="setStore(objInfo)"
           >
-          <textarea
-            v-model="objInfo.content"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="4"
-          ></textarea>
+            Visualizar Descrições
+          </button>
         </div>
+
         <div class="mb-3">
           <label for="formFileStore" class="form-label"
             >Imagem de Destaque</label
@@ -833,19 +957,34 @@ export default {
   methods: {
     incluirDescricao(title, descri) {
       if (this.tituloTemp && this.descricaoTemp) {
-        console.log("cheguei");
         this.descricaoPost.push({ titulo: title, conteudo: descri });
         this.tituloTemp = "";
         this.descricaoTemp = "";
-        console.log(this.descricaoPost);
       }
-
-      console.log("fORA");
+    },
+    incluirDescricaoAtualiza(title, descri, obj1, obj2) {
+      if (this.tituloTemp && this.descricaoTemp) {
+        obj1.push(title);
+        obj2.push(descri);
+        this.tituloTemp = "";
+        this.descricaoTemp = "";
+      }
+    },
+    removerAtualiza2(obj1, obj2) {
+      if (obj1 && obj2) {
+        obj1.pop();
+        obj2.pop();
+      }
     },
 
     removerTamanho() {
       if (this.tamanhoPost) {
         this.tamanhoPost.pop();
+      }
+    },
+    removerAtualiza(obj) {
+      if (obj) {
+        obj.pop();
       }
     },
     removeDescricao() {
@@ -859,6 +998,16 @@ export default {
       }
     },
 
+    inclurAtualiza(item, obj) {
+      if (item == this.tamanhoTemp) {
+        obj.push(item);
+        this.tamanhoTemp = "";
+      }
+      if (item == this.corTemp) {
+        obj.push(item);
+        this.corTemp = "";
+      }
+    },
     inclurTamanho(item) {
       if (this.tamanhoTemp) {
         this.tamanhoPost.push({ tamanho: item });
@@ -927,11 +1076,18 @@ export default {
       formData.append("_method", "patch");
       formData.append("title", obj.title);
       formData.append("categoria_id", obj.categoria_id);
-      formData.append("tamanho", obj.tamanho);
-      formData.append("cor", obj.cor);
-      formData.append("descricao", obj.descricao);
-      formData.append("observacao", obj.observacao);
-      formData.append("content", obj.content);
+      for (let i = 0; i < obj.tamanho.length; i++) {
+        formData.append("tamanho[]", obj.tamanho[i]);
+      }
+      for (let i = 0; i < obj.cor.length; i++) {
+        formData.append("cor[]", obj.cor[i]);
+      }
+      for (let i = 0; i < obj.descricao.length; i++) {
+        formData.append("descricao[]", obj.descricao[i]);
+      }
+      for (let i = 0; i < obj.titulo_descricao.length; i++) {
+        formData.append("titulo_descricao[]", obj.titulo_descricao[i]);
+      }
       if (this.imagemPost[0]) {
         formData.append("thumb", this.imagemPost[0]);
       }
@@ -940,7 +1096,6 @@ export default {
         let imagens = this.imagemGaleriaPost;
         for (let i = 0; i < imagens.length; i++) {
           formData.append("gallery[]", imagens[i]);
-          console.log(formData.getAll("gallery[]"));
         }
       }
       let url = this.urlPosts + "/" + obj.id;
@@ -1003,16 +1158,16 @@ export default {
       formData.append("title", this.tituloPost);
       formData.append("categoria_id", this.categoriaPost);
       formData.append("thumb", this.imagemPost[0]);
-      for (let i = 0; i < this.tamanhoPost; i++) {
-        formData.append("tamanho[]", this.tamanhoPost[i]);
-        console.log(this.tamanhoPost[i]);
+      for (let i = 0; i < this.tamanhoPost.length; i++) {
+        formData.append("tamanho[]", this.tamanhoPost[i].tamanho);
+        console.log(this.tamanhoPost[i].tamanho, this.tamanhoPost[i]);
       }
-
-      for (let i = 0; i < this.corPost; i++) {
-        formData.append("cor[]", this.corPost[i]);
+      for (let i = 0; i < this.corPost.length; i++) {
+        formData.append("cor[]", this.corPost[i].cor);
       }
-      for (let i = 0; i < this.descricaoPost; i++) {
-        formData.append("descricao[]", this.descricaoPost[i]);
+      for (let i = 0; i < this.descricaoPost.length; i++) {
+        formData.append("descricao[]", this.descricaoPost[i].conteudo);
+        formData.append("titulo_descricao[]", this.descricaoPost[i].titulo);
       }
 
       if (this.imagemGaleriaPost) {
@@ -1021,7 +1176,6 @@ export default {
           formData.append("gallery[]", imagens[i]);
         }
       }
-      console.log(formData);
       let config = {
         Headers: {
           "Content-Type": "multipart/form-data",

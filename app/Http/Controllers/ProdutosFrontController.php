@@ -46,6 +46,7 @@ class ProdutosFrontController extends Controller
     public function showAcessorio(Produtos $id)
     {
 
+
         return view('products.acessorioInterno', ['produto' => $id]);
     }
     public function showComponente(Produtos $id)

@@ -28,31 +28,7 @@
             <div class="row mb-2 mx-0">
                 <h1>{{ $produto->title }}<h1>
             </div>
-            <div class="row my-3 mx-0">
-                <div class="col h5">Tamanho</div>
-                <div class="col">{{ $produto->tamanho }}</div>
-            </div>
-            <hr />
-            <div class="row my-3 mx-0">
-                <div class="col h5">Cor</div>
-                <div class="col">{{ $produto->cor }}</div>
-            </div>
-            <hr />
-            <div class="row my-3 mx-0">
-                <div class="col h5">Conteúdo</div>
-                <div class="col">{{ $produto->content }}</div>
-            </div>
-            <hr />
-            <div class="row my-3 mx-0">
-                <div class="col h5">Descrição</div>
-                <div class="col">{{ $produto->descricao }}</div>
-            </div>
-            <hr />
-            <div class="row my-3 mx-0">
-                <div class="col h5">Observação</div>
-                <div class="col">{{ $produto->observacao }}</div>
-            </div>
-            <hr />
+
 
         </div>
 

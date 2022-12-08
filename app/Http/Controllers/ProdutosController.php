@@ -56,12 +56,14 @@ class ProdutosController extends Controller
      */
     public function store(StoreProdutosRequest $request)
     {
-        $img = array();
         //return response()->json($request, 404);
+        $img = array();
         //$imageGallery_urn = "";
         $imageThumb = $request->file('thumb');
         $imageGallery = $request->file('gallery');
         $imagen_urn = $imageThumb->store('imagens', 'public');
+
+
 
         if ($request->file('gallery')) {
             foreach ($imageGallery as $file) {
@@ -78,6 +80,7 @@ class ProdutosController extends Controller
             'tamanho' => $request->tamanho,
             'cor' => $request->cor,
             'descricao' => $request->descricao,
+            'titulo_descricao' => $request->titulo_descricao,
             'gallery' => $img,
             'thumb' => $imagen_urn,
         ]));

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('tamanho');
             $table->json('cor');
             $table->json('descricao');
+            $table->json('titulo_descricao');
             $table->string('thumb');
             $table->json('gallery');
             $table->timestamps();

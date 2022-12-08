@@ -67,7 +67,7 @@
                     @endforeach
                 @elseif ($request->has('Acessorios'))
                     @foreach ($produtos as $item)
-                        <div class="col-4 my-2">
+                        <div class="col-md-4 col my-2">
                             <a href="{{ route('acessorio.interno', $item->id) }}">
                                 <div class="card" style="width: 18rem;">
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->thumb) }}"
@@ -80,7 +80,7 @@
                     @endforeach
                 @elseif ($request->has('Componentes'))
                     @foreach ($produtos as $item)
-                        <div class="col-4 my-2">
+                        <div class="col-md-4 col my-2">
                             <a href="{{ route('componente.interno', $item->id) }}">
                                 <div class="card" style="width: 18rem;">
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->thumb) }}"
@@ -93,7 +93,7 @@
                     @endforeach
                 @elseif ($request->has('Vestuarios'))
                     @foreach ($produtos as $item)
-                        <div class="col-4 my-2">
+                        <div class="col-md-4 col my-2">
                             <a href="{{ route('vestuario.interno', $item->id) }}">
                                 <div class="card" style="width: 18rem;">
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->thumb) }}"
@@ -106,7 +106,7 @@
                     @endforeach
                 @else
                     @foreach ($produtos as $item)
-                        <div class="col-4 my-2">
+                        <div class="col-md-4 col my-2">
                             <a href="{{ route('bike.interno', $item->id) }}">
                                 <div class="card" style="width: 18rem;">
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->thumb) }}"

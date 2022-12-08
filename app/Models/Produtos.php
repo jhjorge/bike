@@ -10,13 +10,14 @@ class Produtos extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'tamanho',  'cor',  'descricao',  'thumb', 'gallery', 'categoria_id'
+        'title', 'tamanho',  'cor',  'descricao',  'thumb', 'gallery', 'categoria_id', 'titulo_descricao'
     ];
     protected $casts = [
         'gallery' => 'array',
         'descricao' => 'array',
         'tamanho' => 'array',
-        'cor' => 'array'
+        'cor' => 'array',
+        'titulo_descricao' => 'array'
     ];
     public function categoria()
     {
