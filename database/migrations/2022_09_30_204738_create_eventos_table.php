@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('locale');
-            $table->string('date');
-            $table->text('content');
+            $table->string('locale')->nullable();
+            $table->string('date')->nullable();
+            $table->json('content')->nullable();
             $table->string('thumb');
-            $table->json('gallery');
+            $table->json('gallery')->nullable();
             $table->timestamps();
         });
     }

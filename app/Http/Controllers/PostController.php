@@ -96,12 +96,14 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, $id)
     {
         $post = $this->post->find($id);
+        $data = $this->post->find($id);
         if ($post == null) {
             return response()->json(['erro' => 'Impossivel realizar a alteração. O recurso solicitado não existe'], 404);
         } else {
+            $post->fill($request->all());
             if ($request->file('thumb')) {
-                Storage::delete($post->thumb);
-                $post->fill($request->all());
+                Storage::delete($data->thumb);
+
 
                 $imagem = $request->file('thumb');
                 $imagem_urn = $imagem->store('imagens', 'public');

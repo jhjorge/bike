@@ -1,7 +1,11 @@
 <template>
   <!--Modal de Criação -->
   <div>
-    <modal-component id="modalEvento" titulo="Adicionar Evento">
+    <modal-component
+      id="modalEvento"
+      titulo="Adicionar Evento"
+      largura="modal-lg"
+    >
       <template v-slot:alertText>
         <alert-component
           titleText="Erro ao tentar cadastrar o Evento"
@@ -53,15 +57,14 @@
         </div>
 
         <div class="mb-3">
-          <label for="conteudoPostModal" class="form-label"
-            >Conteudo do Post</label
-          >
-          <textarea
-            v-model="conteudoPost"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="6"
-          ></textarea>
+          <label for="conteudoPostModal" class="form-label">Conteudo </label>
+          <QuillEditor
+            theme="snow"
+            toolbar="full"
+            v-model:content="conteudoPost"
+            contentType="html"
+            id="apresentacaoModal"
+          />
         </div>
         <div class="mb-3">
           <label for="formFileStore" class="form-label"
@@ -143,6 +146,7 @@
       :setInfo="objInfo.data"
       id="atualizarPost"
       titulo="Atualizar Evento"
+      largura="modal-lg"
     >
       <template v-slot:alertText>
         <alert-component
@@ -200,12 +204,14 @@
           <label for="atualizaConteudoPost" class="form-label"
             >Conteudo do Post</label
           >
-          <textarea
-            v-model="objInfo.content"
-            class="form-control"
-            id="atualizaConteudoPost"
-            rows="6"
-          ></textarea>
+          <QuillEditor
+            theme="snow"
+            v-if="objInfo.content"
+            toolbar="full"
+            v-model:content="objInfo.content"
+            contentType="html"
+            id="apresentacaoModal"
+          />
         </div>
 
         <div class="mb-3">
@@ -257,6 +263,7 @@
       id="deletePost"
       :setInfo="objInfo.data"
       :titulo="'Deletar ' + objInfo.title"
+      largura="modal-lg"
     >
       <template v-slot:alertText>
         <alert-component
@@ -283,15 +290,10 @@
               v-if="objInfo.thumb"
             />
           </div>
-          <div class="row mt-2">
-            <label for="ContentInfo" class="label form-label">Conteudo:</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="5"
-              v-if="objInfo.content"
-            ></textarea>
+          <div class="row mb-3">
+            <label for="ContentInfo" class="label form-label">Conteudo</label>
+
+            <div class="border rounded p-1" v-html="objInfo.content"></div>
           </div>
           <div class="row mt-2">
             <div class="col-5" v-if="objInfo.created_at">
@@ -341,6 +343,7 @@
       id="visualizarModal"
       :setInfo="objInfo.data"
       titulo="Visualizar Evento"
+      largura="modal-lg"
     >
       <template v-slot:conteudo>
         <div class="container">
@@ -353,16 +356,13 @@
               v-if="objInfo.thumb"
             />
           </div>
+
           <div class="row mb-3">
             <label for="ContentInfo" class="label form-label">Conteudo</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="5"
-              v-if="objInfo.content"
-            ></textarea>
+
+            <div class="border rounded p-1" v-html="objInfo.content"></div>
           </div>
+
           <div class="row">
             <label for="localeEventView" class="col form-label">Data</label>
             <label for="testeId1" class="col form-label">Local</label>

@@ -18,12 +18,12 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
-            $table->json('tamanho');
-            $table->json('cor');
-            $table->json('descricao');
-            $table->json('titulo_descricao');
+            $table->json('tamanho')->nullable();
+            $table->json('cor')->nullable();
+            $table->json('descricao')->nullable();
+            $table->json('titulo_descricao')->nullable();
             $table->string('thumb');
-            $table->json('gallery');
+            $table->json('gallery')->nullable();
             $table->timestamps();
         });
     }

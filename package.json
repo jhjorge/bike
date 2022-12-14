@@ -17,9 +17,11 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@vueup/vue-quill": "^1.0.0",
         "bootstrap-icons": "^1.9.1",
         "bootstrap-vue": "^2.23.1",
         "sail": "^0.0.0",
+        "vue-quill-editor": "^3.0.6",
         "vue-template-compiler": "^2.7.10"
     }
 }

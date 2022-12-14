@@ -259,33 +259,36 @@
 
         <div class="mb-3">
           <label class="form-label" for="observacaoBike">Obeservação</label>
-
-          <textarea
-            v-model="observacaoBike"
-            class="form-control"
+          <QuillEditor
+            theme="snow"
+            debug="info"
+            toolbar="essential"
+            v-model:content="observacaoBike"
+            contentType="html"
             id="observacaoBike"
-            rows="2"
-          ></textarea>
+          />
         </div>
         <div class="mb-3">
           <label class="form-label" for="apresentacaoModal">Conteudo</label>
 
-          <textarea
-            v-model="conteudoPost"
-            class="form-control"
+          <QuillEditor
+            theme="snow"
+            toolbar="essential"
+            v-model:content="conteudoPost"
+            contentType="html"
             id="apresentacaoModal"
-            rows="4"
-          ></textarea>
+          />
         </div>
 
         <div class="mb-3">
           <label for="conteudoPostModal" class="form-label">Descrição</label>
-          <textarea
-            v-model="descricaoBike"
-            class="form-control"
+          <QuillEditor
+            theme="snow"
+            toolbar="essential"
+            v-model:content="descricaoBike"
+            contentType="html"
             id="conteudoPostModalThumb"
-            rows="4"
-          ></textarea>
+          />
         </div>
         <div class="mb-3">
           <label for="formFileStore" class="form-label"
@@ -637,33 +640,38 @@
 
         <div class="mb-3">
           <label class="form-label" for="observacaoBike">Obeservação</label>
-
-          <textarea
-            v-model="objInfo.observacao"
-            class="form-control"
-            id="observacaoBike"
-            rows="2"
-          ></textarea>
+          <QuillEditor
+            v-if="objInfo.observacao"
+            theme="snow"
+            toolbar="essential"
+            v-model:content="objInfo.observacao"
+            contentType="html"
+            id="apresentacaoModal"
+          />
         </div>
         <div class="mb-3">
           <label class="form-label" for="apresentacaoModal">Conteudo</label>
-
-          <textarea
-            v-model="objInfo.content"
-            class="form-control"
+          <QuillEditor
+            v-if="objInfo.content"
+            theme="snow"
+            toolbar="essential"
+            v-model:content="objInfo.content"
+            contentType="html"
             id="apresentacaoModal"
-            rows="4"
-          ></textarea>
+          />
         </div>
 
         <div class="mb-3">
           <label for="conteudoPostModal" class="form-label">Descrição</label>
-          <textarea
-            v-model="objInfo.descricao"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="4"
-          ></textarea>
+
+          <QuillEditor
+            v-if="objInfo.descricao"
+            theme="snow"
+            toolbar="essential"
+            v-model:content="objInfo.descricao"
+            contentType="html"
+            id="apresentacaoModal"
+          />
         </div>
 
         <div class="mb-3">
@@ -726,6 +734,7 @@
       id="deletePost"
       :setInfo="objInfo.data"
       :titulo="'Deletar ' + objInfo.title"
+      largura="modal-lg"
     >
       <template v-slot:alertText>
         <alert-component
@@ -750,6 +759,7 @@
               :src="'/storage/' + objInfo.thumb"
               class="img-thumbnail"
               v-if="objInfo.thumb"
+              style="width: 30rem"
             />
           </div>
 
@@ -1002,33 +1012,16 @@
 
           <div class="row mb-3">
             <label for="ContentInfo" class="label form-label">Observação</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.observacao"
-              rows="3"
-              v-if="objInfo.observacao"
-            ></textarea>
+            <div class="border rounded p-1" v-html="objInfo.observacao"></div>
           </div>
           <div class="row mb-3">
             <label for="ContentInfo" class="label form-label">Descrição</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.descricao"
-              rows="2"
-              v-if="objInfo.descricao"
-            ></textarea>
+            <div class="border rounded p-1" v-html="objInfo.descricao"></div>
           </div>
           <div class="row mb-3">
             <label for="ContentInfo" class="label form-label">Conteudo</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="3"
-              v-if="objInfo.content"
-            ></textarea>
+
+            <div class="border rounded p-1" v-html="objInfo.content"></div>
           </div>
 
           <div class="row mt-2">
@@ -1078,17 +1071,19 @@
     <modal-component
       id="visualizarModal"
       :setInfo="objInfo.data"
-      titulo="Visualizar Evento"
+      titulo="Visualizar Bike"
+      largura="modal-lg"
     >
       <template v-slot:conteudo>
         <div class="container">
           <div class="row mb-3">
-            <h5 class="mb-3">Titulo: {{ objInfo.title }}</h5>
+            <h5 class="mb-3">{{ objInfo.title }}</h5>
 
             <img
               :src="'/storage/' + objInfo.thumb"
               class="img-thumbnail"
               v-if="objInfo.thumb"
+              style="width: 30rem"
             />
           </div>
 
@@ -1339,35 +1334,30 @@
             </div>
           </div>
 
-          <div class="row mb-3">
-            <label for="ContentInfo" class="label form-label">Observação</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.observacao"
-              rows="3"
-              v-if="objInfo.observacao"
-            ></textarea>
+          <div class="container mb-3">
+            <label for="ContentInfo" class="label row form-label"
+              >Observação</label
+            >
+            <div
+              class="border rounded row p-1"
+              v-html="objInfo.observacao"
+            ></div>
           </div>
-          <div class="row mb-3">
-            <label for="ContentInfo" class="label form-label">Descrição</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.descricao"
-              rows="2"
-              v-if="objInfo.descricao"
-            ></textarea>
+          <div class="container mb-3">
+            <label for="ContentInfo" class="label row form-label"
+              >Descrição</label
+            >
+            <div
+              class="border rounded row p-1"
+              v-html="objInfo.descricao"
+            ></div>
           </div>
-          <div class="row mb-3">
-            <label for="ContentInfo" class="label form-label">Conteudo</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="3"
-              v-if="objInfo.content"
-            ></textarea>
+          <div class="container mb-3">
+            <label for="ContentInfo" class="label row form-label"
+              >Conteudo</label
+            >
+
+            <div class="border row rounded p-1" v-html="objInfo.content"></div>
           </div>
 
           <div class="row mt-5">
@@ -1699,6 +1689,7 @@ export default {
     },
 
     atualizar(obj) {
+      console.log(obj);
       let formData = new FormData();
       formData.append("_method", "patch");
       formData.append("title", obj.title);
@@ -1729,7 +1720,7 @@ export default {
       if (this.imagemPost[0]) {
         formData.append("thumb", this.imagemPost[0]);
       }
-      if (this.bannerPost[0]) {
+      if (this.bannerPost) {
         formData.append("banner", this.bannerPost[0]);
       }
       if (this.imagemGaleriaPost) {
@@ -1844,13 +1835,12 @@ export default {
       formData.append("observacao", this.observacaoBike);
       formData.append("content", this.conteudoPost);
       formData.append("thumb", this.imagemPost[0]);
-      formData.append("banner", this.bannerPost[0]);
+      if (this.bannerPost) {
+        formData.append("banner", this.bannerPost[0]);
+      }
       if (this.imagemGaleriaPost) {
-        console.log("Criando o objeto");
-        let imagens = this.imagemGaleriaPost;
-        for (let i = 0; i < imagens.length; i++) {
-          formData.append("gallery[]", imagens[i]);
-          console.log(formData.getAll("gallery[]"));
+        for (let i = 0; i < this.imagemGaleriaPost.length; i++) {
+          formData.append("gallery[]", this.imagemGaleriaPost[i]);
         }
       }
 

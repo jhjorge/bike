@@ -9,7 +9,8 @@ import { createApp } from 'vue';
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 
-
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -18,6 +19,7 @@ import { createApp } from 'vue';
  */
 
 const app = createApp({});
+app.component('QuillEditor', QuillEditor);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);

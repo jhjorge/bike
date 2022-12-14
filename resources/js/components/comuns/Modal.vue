@@ -8,7 +8,7 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
+      <div :class="tamanho">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -33,6 +33,17 @@
 </template>
 <script>
 export default {
-  props: ["id", "titulo", "objInfo"],
+  props: ["id", "titulo", "objInfo", "largura"],
+  computed: {
+    tamanho() {
+      if (this.largura) {
+        let text = "modal-dialog " + this.largura;
+        return text;
+      } else {
+        let text = "modal-dialog ";
+        return text;
+      }
+    },
+  },
 };
 </script>

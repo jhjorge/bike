@@ -1,6 +1,6 @@
 <template>
   <div>
-    <modal-component id="modalBlog" titulo="Adicionar Post">
+    <modal-component id="modalBlog" titulo="Adicionar Post" largura="modal-lg">
       <template v-slot:alertText>
         <alert-component
           titleText="Erro ao tentar cadastrar o Post"
@@ -30,15 +30,18 @@
           <label for="conteudoPostModal" class="form-label"
             >Conteudo do Post</label
           >
-          <textarea
-            v-model="conteudoPost"
-            class="form-control"
-            id="conteudoPostModal"
-            rows="6"
-          ></textarea>
+          <QuillEditor
+            theme="snow"
+            toolbar="full"
+            v-model:content="conteudoPost"
+            contentType="html"
+            id="apresentacaoModal"
+          />
         </div>
         <div class="mb-3">
-          <label for="formFileStore" class="form-label">Galeria</label>
+          <label for="formFileStore" class="form-label"
+            >Imagem de Destaque</label
+          >
           <input
             @change="carregarImg($event)"
             class="form-control"
@@ -79,6 +82,7 @@
       :setInfo="objInfo.data"
       id="atualizarPost"
       titulo="Atualizar Post"
+      largura="modal-lg"
     >
       <template v-slot:alertText>
         <alert-component
@@ -112,12 +116,14 @@
           <label for="atualizaConteudoPost" class="form-label"
             >Conteudo do Post</label
           >
-          <textarea
-            v-model="objInfo.content"
-            class="form-control"
-            id="atualizaConteudoPost"
-            rows="6"
-          ></textarea>
+          <QuillEditor
+            theme="snow"
+            v-if="objInfo.content"
+            toolbar="full"
+            v-model:content="objInfo.content"
+            contentType="html"
+            id="apresentacaoModal"
+          />
         </div>
         <div class="mb-3">
           <label for="atualizaformFile" class="form-label"
@@ -163,6 +169,7 @@
       id="deletePost"
       :setInfo="objInfo.data"
       :titulo="'Deletar ' + objInfo.title"
+      largura="modal-lg"
     >
       <template v-slot:alertText>
         <alert-component
@@ -189,15 +196,10 @@
               v-if="objInfo.thumb"
             />
           </div>
-          <div class="row mt-2">
-            <label for="ContentInfo" class="label form-label">Conteudo:</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="5"
-              v-if="objInfo.content"
-            ></textarea>
+          <div class="row mb-3">
+            <label for="ContentInfo" class="label form-label">Conteudo</label>
+
+            <div class="border rounded p-1" v-html="objInfo.content"></div>
           </div>
           <div class="row mt-2">
             <div class="col-5" v-if="objInfo.created_at">
@@ -245,6 +247,7 @@
       id="visualizarModal"
       :setInfo="objInfo.data"
       titulo="Visualizar Post"
+      largura="modal-lg"
     >
       <template v-slot:conteudo>
         <div class="container">
@@ -256,15 +259,10 @@
               v-if="objInfo.thumb"
             />
           </div>
-          <div class="row mt-2">
-            <label for="ContentInfo" class="label form-label">Conteudo:</label>
-            <textarea
-              id="ContentInfo"
-              disabled
-              :value="objInfo.content"
-              rows="5"
-              v-if="objInfo.content"
-            ></textarea>
+          <div class="row mb-3" v-if="objInfo.content">
+            <label for="ContentInfo" class="label form-label">Conteudo</label>
+
+            <div class="border rounded p-1" v-html="objInfo.content"></div>
           </div>
           <div class="row mt-2">
             <div class="col-5" v-if="objInfo.created_at">
@@ -483,7 +481,7 @@ export default {
     loader: false,
     errored: false,
     tituloPost: null,
-    conteudoPost: null,
+    conteudoPost: [],
     imagemPost: [],
     fetchStatus: null,
     fetchDetails: null,

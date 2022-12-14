@@ -10,6 +10,7 @@ class Eventos extends Model
     use HasFactory;
     protected $fillable = ['title', 'locale', 'date', 'content', 'thumb', 'gallery',];
     protected $casts = [
-        'gallery' => 'array'
+        'gallery' => 'array',
+        'content' => 'array'
     ];
 }

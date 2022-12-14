@@ -184,6 +184,7 @@ class BikesController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a exclusão. O recurso solicitado não existe'], 404);
         } else {
             Storage::disk('public')->delete($bikes->thumb);
+            Storage::disk('public')->delete($bikes->banner);
             foreach ($bikes->gallery as $img) {
                 Storage::disk('public')->delete($img);
             }

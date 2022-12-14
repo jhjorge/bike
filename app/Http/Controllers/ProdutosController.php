@@ -164,7 +164,7 @@ class ProdutosController extends Controller
                 Storage::disk('public')->delete($produto->gallery);
 
                 $produto->delete();
-                return response()->json(['msg' => 'O post removido com sucesso!'], 200);
+                return response()->json(['msg' => 'O Produto foi removido com sucesso!'], 200);
             }
         }
     }

@@ -3,31 +3,31 @@
 
 
 @section('content')
-    <div class="container my-4">
-        <h1>Eventos</h1>
-        <div class="row">
-            <div class="my-4 blog-view" style="height: 60vh">
-                @forelse($eventos as $evento)
-                    <div class="card blog-view-post my-4" style="width: 18rem;">
-                        <a href="{{ route('evento', $evento->id) }}">
-                            <img class="card-img-top" src="{{ asset('img/evento.jpg') }}" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text">{{ Str::limit($evento->content, 60, '...') }}</p>
-                            </div>
-                            <div class="mx-2 my-2">
-                                <i class="bi bi-calendar3"> {{ $evento->date }}</i>
-                            </div>
-                            <div class="mx-2 my-2">
-                                <i class="bi bi-geo-alt-fill"> {{ $evento->locale }}</i>
-                            </div>
-                        </a>
-                    </div>
+    <div class="my-4 container">
+        <div class="row my-4">
+            <h1>Eventos</h1>
+        </div>
+        <div class="row my-4">
 
-                @empty
-                    <h2>Nenhum Post encontrado!</h2>
-                @endforelse
+            @forelse($eventos as $evento)
+                <div class="my-4 card-deck blog-view" style="width: 18rem;">
+                    <a href="{{ route('evento', $evento->id) }}">
+                        <img class="card-img-top" src="{{ asset('storage/' . $evento->thumb) }}" alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text">{!! Str::limit($evento->content, 100, '...') !!}</p>
+                        </div>
+                        <div class="mx-2 my-2">
+                            <i class="bi bi-calendar3"> {{ $evento->date }}</i>
+                        </div>
+                        <div class="mx-2 my-2">
+                            <i class="bi bi-geo-alt-fill"> {{ $evento->locale }}</i>
+                        </div>
+                    </a>
+                </div>
+            @empty
+                <h2>Nenhum Post encontrado!</h2>
+            @endforelse
 
-            </div>
 
 
         </div>
@@ -36,6 +36,7 @@
                 {{ $eventos->onEachSide(5)->links() }}
             </div>
         </div>
-    </div>
 
-@endsection
+
+
+    @endsection

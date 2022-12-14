@@ -198,7 +198,11 @@
       </template>
     </modal-component>
     <!--Modal Conteudo-->
-    <modal-component id="modalDescricoes" titulo="Descrições">
+    <modal-component
+      id="modalDescricoes"
+      titulo="Descrições"
+      largura="modal-lg"
+    >
       <template v-slot:conteudo>
         <div class="col">
           <div class="accordion" id="accordionExample" v-if="descricaoPost">

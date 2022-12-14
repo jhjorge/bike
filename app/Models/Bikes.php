@@ -41,6 +41,9 @@ class Bikes extends Model
 
     ];
     protected $casts = [
-        'gallery' => 'array'
+        'gallery' => 'array',
+        'observacao' => 'array',
+        'content' => 'array',
+        'descricao' => 'array',
     ];
 }

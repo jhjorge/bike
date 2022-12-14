@@ -26,7 +26,7 @@ class UpdateEventosRequest extends FormRequest
         return [
             'title' => 'min:3|max:50',
             'date' => 'min:3|max:50',
-            'content' => 'min:10|max:2000',
+            'content' => 'min:10',
             'thumb' => 'image',
         ];
     }

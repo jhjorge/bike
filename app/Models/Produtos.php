@@ -19,6 +19,8 @@ class Produtos extends Model
         'cor' => 'array',
         'titulo_descricao' => 'array'
     ];
+
+
     public function categoria()
     {
         return $this->belongsTo('App\Models\Categorias');
