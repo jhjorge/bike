@@ -1,9 +1,16 @@
 @extends('layouts.app')
 @section('titulo', 'Suporte e Garantia')
 
+@php
+    $teste = true;
+@endphp
+@section('valida', $teste)
+
 
 @section('content')
     <div class="container suporte">
+
+
         <h1>Suporte e Garantia</h1>
         <div class=" flex-row suporte-nav">
             <a href="#garantia">Garantia</a>
@@ -170,24 +177,44 @@
 
             </p>
             <div class="suporte-solicitar-form">
-                <form class="form-row">
+
+                @if ($errors->any())
+                    <div class="container">
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger row col-md-6 " role="alert">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                @endif
+                <form class="form-row" action="{{ route('suporte.store') }}" method="post">
+                    @csrf
                     <h3>
                         Dados Pessoais:
                     </h3>
-                    <input class="form-control " type="name" placeholder="Nome">
-                    <input class="form-control " type="tel" placeholder="Telefone">
-                    <input class="form-control " type="email" placeholder="Email:">
+                    <input class="form-control mb-3 " type="name" name="nome" value="{{ old('nome') }}"
+                        placeholder="Nome">
+                    <input class="form-control mb-3" type="tel" name="telefone" value="{{ old('telefone') }}"
+                        placeholder="Telefone">
+                    <input class="form-control mb-3" type="email" name="email" value="{{ old('email') }}"
+                        placeholder="Email:">
                     <h3>
                         Dados da Bike:
                     </h3>
-                    <input type="text" class="form-control" placeholder="Modelo da Bike">
-                    <input type="number" class="form-control" placeholder="Número de Série do Quadro">
-                    <input type="number" class="form-control" placeholder="Número da Nota Fiscal">
-                    <input type="text" class="form-control" placeholder="Nome da Revenda">
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control mb-3" name="modelo_bike" value="{{ old('modelo_bike') }}"
+                        placeholder="Modelo da Bike">
+                    <input type="text" class="form-control mb-3" name="numero_serie"
+                        value="{{ old('numero_serie') }}" placeholder="Número de Série do Quadro">
+                    <input type="text" class="form-control mb-3" name="nota_fiscal" value="{{ old('nota_fiscal') }}"
+                        placeholder="Número da Nota Fiscal">
+                    <input type="text" class="form-control mb-3" name="nome_revenda"
+                        value="{{ old('nome_revenda') }}" placeholder="Nome da Revenda">
+                    <input type="text" name="data_compra" class="form-control mb-3" value="{{ old('data_compra') }}"
                         placeholder="Data de compra da bike (o mesmo que consta na nota fiscal)">
-                    <textarea rows="4" cols="50" class="form-control" maxlength="2000"
-                        placeholder="Descreva sua solicitação"></textarea>
+                    <textarea rows="4" cols="50" name="assunto" value="{{ old('assunto') }}" class="form-control mb-3"
+                        maxlength="2000" placeholder="Descreva sua solicitação"></textarea>
                     <div class="d-flex justify-content-center">
                         <button class="btn button">Enviar</button>
                     </div>

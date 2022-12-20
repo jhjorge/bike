@@ -24,7 +24,22 @@ class StoreContatosRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome' => 'required|min:3|max:50',
+            'telefone' => 'required|min:3|max:50',
+            'email' => 'required|min:3|max:50',
+            'documento' => 'required|min:3|max:50',
+            'cidade' => 'required|min:3|max:50',
+            'estado' => 'required|min:2|max:50',
+
+            'assunto' => 'required|min:3|max:500',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatório!',
+            'min' => 'O :attribute deve conter no mínimo 3 letras',
+            'max' => 'O :attribute deve conter no máximo 50 letras',
         ];
     }
 }

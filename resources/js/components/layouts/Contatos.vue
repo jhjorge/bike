@@ -607,7 +607,7 @@ export default {
   component: { Modal },
 
   data: () => ({
-    urlPosts: "http://127.0.0.1:8000/api/contatos",
+    urlPosts: "https://goodnine.com.br/api/contatos",
     posts: { data: [] },
     loading: true,
     loader: false,
@@ -757,7 +757,7 @@ export default {
           this.errored = true;
           this.urlPaginacao = "";
           this.urlFiltro = "";
-          this.urlPosts = "http://localhost:8000/api/contatos";
+          this.urlPosts = "https://goodnine.com.br/api/contatos";
         })
         .finally(() => (this.loading = false));
     },

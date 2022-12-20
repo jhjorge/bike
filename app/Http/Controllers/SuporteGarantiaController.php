@@ -30,7 +30,7 @@ class SuporteGarantiaController extends Controller
 
             foreach ($suportes as $key => $condicao) {
                 $c = explode(':', $condicao);
-                $suportes = $this->post::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
+                $suportes = $this->suporte::where($c[0], $c[1], $c[2])->orderby('id', 'desc')->paginate(10);
             }
         } elseif ($request->has('valor')) {
             $cont = $request->valor;

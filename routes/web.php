@@ -36,6 +36,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/painel', [App\Http\Controllers\PainelController::class, 'index'])->name('painel');
 Route::get('/sobre', [App\Http\Controllers\SobreController::class, 'index'])->name('sobre');
 Route::get('/suporteegarantia', [App\Http\Controllers\SuporteController::class, 'index'])->name('suporte');
+Route::post('/suporteegarantia', [App\Http\Controllers\SuporteController::class, 'store'])->name('suporte.store');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{id}', [App\Http\Controllers\BlogController::class, 'post'])->name('blogPost');
 
@@ -44,4 +45,6 @@ Route::get('/evento/{id}', [App\Http\Controllers\EventoController::class, 'show'
 
 Route::get('/ondecomprar', [App\Http\Controllers\OndeComprarController::class, 'index'])->name('ondeComprar');
 Route::get('/faleconosco', [App\Http\Controllers\ContatoController::class, 'index'])->name('contato');
+Route::post('/faleconosco', [App\Http\Controllers\ContatoController::class, 'store'])->name('contato.store');
 Route::get('/registresuabike', [App\Http\Controllers\RegistroBikeController::class, 'index'])->name('registroBike');
+Route::post('/registresuabike', [App\Http\Controllers\RegistroBikeController::class, 'store'])->name('registroBike.store');

@@ -24,7 +24,23 @@ class UpdateProdutosRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|min:3|max:50',
+            'descricao' => 'required',
+            'categoria_id' => 'required',
+            'cor' => 'required|max:200',
+            'tamanho' => 'required|max:200',
+            'thumb' => 'mimes:png,jpg,jpeg',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required' => 'O campo :attribute é obrigatório!',
+            'title.unique' => 'O titulo já existe',
+            'title.min' => 'O tiítulo deve conter no mínimo 3 letras',
+            'min' => ':attribute deve conter no mínimo 3 letras',
+            'max' => ':attribute deve conter no máximo 200 letras',
+            'thumb.mimes' => 'A imagem de destaque deve ser png, jpg ou jpeg'
         ];
     }
 }

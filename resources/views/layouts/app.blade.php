@@ -13,6 +13,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    @isset($teste)
+        {!! htmlScriptTagJsApi() !!}
+    @endisset
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.sass', 'resources/js/app.js'])

@@ -25,9 +25,11 @@ class StoreProdutosRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:50',
-            'descricao' => '|max:2000',
-            'cor' => 'max:100',
-            'tamanho' => 'max:100',
+            'descricao' => 'required|max:2000',
+            'categoria_id' => 'required',
+
+            'cor' => 'max:200',
+            'tamanho' => 'max:200',
             'thumb' => 'required|mimes:png,jpg,jpeg',
         ];
     }
@@ -35,6 +37,7 @@ class StoreProdutosRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute é obrigatório!',
+            'categoria_id.required' => 'A categoria é obrigatório!',
             'title.unique' => 'O titulo já existe',
             'title.min' => 'O tiítulo deve conter no mínimo 3 letras',
             'title.max' => 'O título deve conter no máximo 50 letras',

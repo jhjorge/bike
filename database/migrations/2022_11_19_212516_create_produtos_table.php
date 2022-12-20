@@ -21,7 +21,6 @@ return new class extends Migration
             $table->json('tamanho')->nullable();
             $table->json('cor')->nullable();
             $table->json('descricao')->nullable();
-            $table->json('titulo_descricao')->nullable();
             $table->string('thumb');
             $table->json('gallery')->nullable();
             $table->timestamps();

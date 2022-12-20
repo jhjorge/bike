@@ -80,7 +80,6 @@ class ProdutosController extends Controller
             'tamanho' => $request->tamanho,
             'cor' => $request->cor,
             'descricao' => $request->descricao,
-            'titulo_descricao' => $request->titulo_descricao,
             'gallery' => $img,
             'thumb' => $imagen_urn,
         ]));

@@ -33,7 +33,28 @@
           <div class="card p-2">
             <ul class="row">
               <li class="col" v-for="item in tamanhoPost" :key="item.id">
-                <span class="badge bg-primary">{{ item.tamanho }}</span>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary m-1 position-relative"
+                  @click.prevent="removerTamanho(item)"
+                >
+                  {{ item.tamanho }}
+                  <span
+                    class="
+                      position-absolute
+                      top-0
+                      start-100
+                      translate-middle
+                      p-1
+                      bg-danger
+                      border border-light
+                      rounded-circle
+                    "
+                    style="font-size: 0.5rem"
+                  >
+                    X
+                  </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -55,13 +76,6 @@
               >
                 Adicionar
               </button>
-              <button
-                class="btn btn-sm btn-danger col"
-                @click.prevent="removerTamanho()"
-                type="button"
-              >
-                Remover o Último
-              </button>
             </div>
           </div>
         </div>
@@ -70,7 +84,28 @@
           <div class="card p-2">
             <ul class="row">
               <li class="col" v-for="item in corPost" :key="item.id">
-                <span class="badge bg-primary">{{ item.cor }}</span>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary m-1 position-relative"
+                  @click.prevent="removerCor(item)"
+                >
+                  {{ item.cor }}
+                  <span
+                    class="
+                      position-absolute
+                      top-0
+                      start-100
+                      translate-middle
+                      p-1
+                      bg-danger
+                      border border-light
+                      rounded-circle
+                    "
+                    style="font-size: 0.5rem"
+                  >
+                    X
+                  </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -92,13 +127,6 @@
               >
                 Adicionar
               </button>
-              <button
-                class="btn btn-sm btn-danger col"
-                @click.prevent="removerCor()"
-                type="button"
-              >
-                Remover o Último
-              </button>
             </div>
           </div>
         </div>
@@ -109,9 +137,10 @@
             id="selectCategory"
             class="form-select"
             aria-label="Selecione Uma categoria"
+            :value="categoriaPost"
             v-model="categoriaPost"
           >
-            <option default disabled>Selecione uma Categoria</option>
+            <option value="" disabled>Selecione uma Categoria</option>
             <option value="1">Acessórios</option>
             <option value="2">Componentes</option>
             <option value="3">Vestuário</option>
@@ -119,6 +148,16 @@
         </div>
 
         <div class="mb-3">
+          <div v-if="msgDescri">
+            <div class="alert alert-danger" role="alert">
+              Os campos titulo e descrição devem ser preenchidos!
+            </div>
+          </div>
+          <div v-if="msg">
+            <div class="alert alert-success" role="alert">
+              Descrição adicionada!
+            </div>
+          </div>
           <label for="conteudoPostModal" class="form-label"
             >Descrição do Produto</label
           >
@@ -133,12 +172,14 @@
               />
             </div>
           </div>
-          <textarea
-            v-model="descricaoTemp"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="4"
-          ></textarea>
+          <QuillEditor
+            theme="snow"
+            toolbar="essential"
+            v-model:content="descricaoTemp"
+            contentType="html"
+            id="descricaoProdu"
+          />
+
           <input
             class="btn btn-primary my-2"
             type="submit"
@@ -203,14 +244,26 @@
       titulo="Descrições"
       largura="modal-lg"
     >
-      <template v-slot:conteudo>
-        <div class="col">
-          <div class="accordion" id="accordionExample" v-if="descricaoPost">
-            <div
-              class="accordion-item"
-              v-for="item in descricaoPost"
-              :key="item.id"
-            >
+      <template v-slot:conteudo v-if="descricaoPost">
+        <div class="col" v-for="(item, index) in descricaoPost" :key="index">
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <span
+                class="
+                  position-absolute
+                  top-1
+                  start-80
+                  translate-middle
+                  p-1
+                  btn btn-primary btn-sm
+                  border border-light
+                  rounded-circle
+                "
+                @click="removeDescricao(index)"
+                style="font-size: 0.5rem; z-index: 2"
+              >
+                X
+              </span>
               <h2 class="accordion-header" id="headingOne">
                 <button
                   class="accordion-button"
@@ -220,7 +273,7 @@
                   aria-expanded="true"
                   aria-controls="collapseOne"
                 >
-                  {{ item.titulo }}
+                  {{ JSON.parse(item).titulo }}
                 </button>
               </h2>
 
@@ -231,42 +284,55 @@
                 data-bs-parent="#accordionExample"
               >
                 <div class="accordion-body container">
-                  <span>
-                    {{ item.conteudo }}
-                  </span>
+                  <span v-html="JSON.parse(item).conteudo"> </span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-primary"
-              data-bs-target="#modalEvento"
-              data-bs-toggle="modal"
-              data-bs-dismiss="modal"
-            >
-              Voltar</button
-            ><button class="btn btn-danger" @click="removeDescricao()">
-              Exlucir o Ultimo
-            </button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            data-bs-target="#modalEvento"
+            data-bs-toggle="modal"
+            data-bs-dismiss="modal"
+          >
+            Voltar
+          </button>
         </div>
       </template>
     </modal-component>
     <!--Modal ConteudoItem-->
     <modal-component
       id="modalDescricoesItem"
-      titulo="Descrições2"
+      titulo="Descrições"
       :setInfo="objInfo.data"
+      largura="modal-lg"
     >
-      <template v-slot:conteudo>
-        <div class="col">
-          <div class="accordion" id="accordionExample" v-if="objInfo">
-            <div
-              class="accordion-item"
-              v-for="item in objInfo.titulo_descricao"
-              :key="item.id"
-            >
+      <template v-slot:conteudo v-if="objInfo.descricao">
+        <div
+          class="col"
+          v-for="(item, index) in objInfo.descricao"
+          :key="index"
+        >
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <span
+                class="
+                  position-absolute
+                  top-1
+                  start-80
+                  translate-middle
+                  p-1
+                  btn btn-primary btn-sm
+                  border border-light
+                  rounded-circle
+                "
+                @click="removerAtualiza2(objInfo.descricao, index)"
+                style="font-size: 0.5rem; z-index: 2"
+              >
+                X
+              </span>
               <h2 class="accordion-header" id="headingOne">
                 <button
                   class="accordion-button"
@@ -275,8 +341,9 @@
                   data-bs-target="#collapseOne"
                   aria-expanded="true"
                   aria-controls="collapseOne"
+                  v-if="item"
                 >
-                  {{ item }}
+                  {{ JSON.parse(item).titulo }}
                 </button>
               </h2>
 
@@ -286,14 +353,63 @@
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div
-                  class="accordion-body container"
-                  v-for="content in objInfo.descricao"
-                  :key="content.id"
+                <div class="accordion-body container" v-if="item">
+                  <span v-html="JSON.parse(item).conteudo"> </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary text-center"
+            data-bs-target="#atualizarPost"
+            data-bs-toggle="modal"
+            data-bs-dismiss="modal"
+          >
+            Voltar
+          </button>
+        </div>
+      </template>
+    </modal-component>
+    <!--Modal ConteudoItem2-->
+    <modal-component
+      id="modalDescricoesItem2"
+      titulo="Descrições"
+      :setInfo="objInfo.data"
+      largura="modal-lg"
+    >
+      <template v-slot:conteudo v-if="objInfo.descricao">
+        <div
+          class="col"
+          v-for="(item, index) in objInfo.descricao"
+          :key="index"
+        >
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                  v-if="item"
                 >
-                  <span>
-                    {{ content }}
-                  </span>
+                  {{ JSON.parse(item).titulo }}
+                </button>
+              </h2>
+
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body container">
+                  <span v-html="JSON.parse(item).conteudo" v-if="item"> </span>
                 </div>
               </div>
             </div>
@@ -301,18 +417,11 @@
           <div class="modal-footer">
             <button
               class="btn btn-primary"
-              data-bs-target="#atualizarPost"
+              data-bs-target="#visualizarModal"
               data-bs-toggle="modal"
               data-bs-dismiss="modal"
             >
-              Voltar</button
-            ><button
-              class="btn btn-danger"
-              @click="
-                removerAtualiza2(objInfo.titulo_descricao, objInfo.descricao)
-              "
-            >
-              Remover o Último
+              Voltar
             </button>
           </div>
         </div>
@@ -388,8 +497,33 @@
           <label for="conteudoPostModal" class="form-label">Tamanho</label>
           <div class="card p-2">
             <ul class="row">
-              <li class="col" v-for="item in objInfo.tamanho" :key="item.id">
-                <span class="badge bg-primary">{{ item }}</span>
+              <li
+                class="col"
+                v-for="(item, index) in objInfo.tamanho"
+                :key="index"
+              >
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary m-1 position-relative"
+                  @click.prevent="removerAtualiza(objInfo.tamanho, index)"
+                >
+                  {{ item }}
+                  <span
+                    class="
+                      position-absolute
+                      top-0
+                      start-100
+                      translate-middle
+                      p-1
+                      bg-danger
+                      border border-light
+                      rounded-circle
+                    "
+                    style="font-size: 0.5rem"
+                  >
+                    X
+                  </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -411,13 +545,6 @@
               >
                 Adicionar
               </button>
-              <button
-                class="btn btn-sm btn-danger col"
-                @click.prevent="removerAtualiza(objInfo.tamanho)"
-                type="button"
-              >
-                Remover o Último
-              </button>
             </div>
           </div>
         </div>
@@ -425,8 +552,29 @@
           <label for="conteudoPostModal" class="form-label">Cor</label>
           <div class="card p-2">
             <ul class="row">
-              <li class="col" v-for="item in objInfo.cor" :key="item.id">
-                <span class="badge bg-primary">{{ item }}</span>
+              <li class="col" v-for="(item, index) in objInfo.cor" :key="index">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary m-1 position-relative"
+                  @click.prevent="removerAtualiza(objInfo.cor, index)"
+                >
+                  {{ item }}
+                  <span
+                    class="
+                      position-absolute
+                      top-0
+                      start-100
+                      translate-middle
+                      p-1
+                      bg-danger
+                      border border-light
+                      rounded-circle
+                    "
+                    style="font-size: 0.5rem"
+                  >
+                    X
+                  </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -448,29 +596,19 @@
               >
                 Adicionar
               </button>
-              <button
-                class="btn btn-sm btn-danger col"
-                @click.prevent="removerAtualiza(objInfo.cor)"
-                type="button"
-              >
-                Remover o Último
-              </button>
             </div>
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="selectCategory" class="form-label"
-            >Categeoria Atual:
-            <b>{{ categoriaView(objInfo.categoria_id) }}</b></label
-          >
+        <div class="mb-3" v-if="objInfo.categoria_id">
+          <label for="selectCategory" class="form-label">Categeoria: </label>
           <select
             id="selectCategory"
             class="form-select"
             aria-label="Selecione Uma categoria"
-            v-model="categoriaPost"
+            :value="objInfo.categoria_id"
+            v-model="objInfo.categoria_id"
           >
-            <option selected disabled>Alterar Categoria?</option>
             <option value="1">Acessórios</option>
             <option value="2">Componentes</option>
             <option value="3">Vestuário</option>
@@ -482,6 +620,17 @@
             >Descrição do Produto</label
           >
           <div class="row">
+            <div v-if="msgDescri">
+              <div class="alert alert-danger" role="alert">
+                Os campos titulo e descrição devem ser preenchidos!
+              </div>
+            </div>
+
+            <div v-if="msg">
+              <div class="alert alert-success" role="alert">
+                Descrição adicionada!
+              </div>
+            </div>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">Titulo</span>
               <input
@@ -492,12 +641,13 @@
               />
             </div>
           </div>
-          <textarea
-            v-model="descricaoTemp"
-            class="form-control"
-            id="conteudoPostModalThumb"
-            rows="4"
-          ></textarea>
+          <QuillEditor
+            theme="snow"
+            toolbar="essential"
+            v-model:content="descricaoTemp"
+            contentType="html"
+            id="descricaoProdu"
+          />
           <input
             class="btn btn-primary my-2"
             type="submit"
@@ -506,7 +656,6 @@
               incluirDescricaoAtualiza(
                 tituloTemp,
                 descricaoTemp,
-                objInfo.titulo_descricao,
                 objInfo.descricao
               )
             "
@@ -673,6 +822,7 @@
             >
             <input
               v-model="objInfo.title"
+              disabled
               type="text"
               class="form-control"
               id="tituloEventoModal"
@@ -682,7 +832,11 @@
             <label for="conteudoPostModal" class="form-label">Tamanho</label>
             <div class="card p-2">
               <ul class="row">
-                <li class="col" v-for="item in objInfo.tamanho" :key="item.id">
+                <li
+                  class="col"
+                  v-for="(item, index) in objInfo.tamanho"
+                  :key="index"
+                >
                   <span class="badge bg-primary">{{ item }}</span>
                 </li>
               </ul>
@@ -692,7 +846,11 @@
             <label for="conteudoPostModal" class="form-label">Cor</label>
             <div class="card p-2">
               <ul class="row">
-                <li class="col" v-for="item in objInfo.cor" :key="item.id">
+                <li
+                  class="col"
+                  v-for="(item, index) in objInfo.cor"
+                  :key="index"
+                >
                   <span class="badge bg-primary">{{ item }}</span>
                 </li>
               </ul>
@@ -708,7 +866,7 @@
           <div>
             <button
               data-bs-toggle="modal"
-              data-bs-target="#modalDescricoesItem"
+              data-bs-target="#modalDescricoesItem2"
               data-keyboard="true"
               class="btn mx-md-1 mt-2 mt-md-0 btn-secondary"
               @click="setStore(objInfo)"
@@ -967,6 +1125,8 @@ export default {
     imagemPost: [],
     imagemGaleriaPost: [],
     objetoGaleria: [],
+    msg: false,
+    msgDescri: false,
 
     fetchStatus: "",
     fetchDetails: "",
@@ -978,66 +1138,86 @@ export default {
 
   methods: {
     incluirDescricao(title, descri) {
-      if (this.tituloTemp && this.descricaoTemp) {
-        this.descricaoPost.push({ titulo: title, conteudo: descri });
+      if (title && descri) {
+        this.descricaoPost.push(
+          JSON.stringify({ titulo: title, conteudo: descri })
+        );
         this.tituloTemp = "";
         this.descricaoTemp = "";
+        this.clearField;
+        this.msg = !this.msg;
+        setTimeout(() => {
+          this.msg = false;
+        }, 2000);
+      } else {
+        this.msgDescri = !this.msgDescri;
+        setTimeout(() => {
+          this.msgDescri = false;
+        }, 2000);
       }
     },
-    incluirDescricaoAtualiza(title, descri, obj1, obj2) {
-      if (this.tituloTemp && this.descricaoTemp) {
-        obj1.push(title);
-        obj2.push(descri);
+    incluirDescricaoAtualiza(title, descri, obj) {
+      if (title && descri) {
+        obj.push(JSON.stringify({ titulo: title, conteudo: descri }));
         this.tituloTemp = "";
         this.descricaoTemp = "";
+        this.clearField;
+        this.msg = !this.msg;
+        setTimeout(() => {
+          this.msg = false;
+        }, 2000);
+      } else {
+        this.msgDescri = !this.msgDescri;
+        setTimeout(() => {
+          this.msgDescri = false;
+        }, 2000);
       }
     },
     removerAtualiza2(obj1, obj2) {
-      if (obj1 && obj2) {
-        obj1.pop();
-        obj2.pop();
+      if (obj1) {
+        obj1.splice(obj2, 1);
       }
     },
 
-    removerTamanho() {
-      if (this.tamanhoPost) {
-        this.tamanhoPost.pop();
-      }
-    },
-    removerAtualiza(obj) {
+    removerTamanho(obj) {
       if (obj) {
-        obj.pop();
+        this.tamanhoPost.splice(this.tamanhoPost.indexOf(obj), 1);
       }
     },
-    removeDescricao() {
+    removerAtualiza(obj, indice) {
+      if (obj) {
+        obj.splice(indice, 1);
+      }
+    },
+    removeDescricao(indice) {
       if (this.descricaoPost) {
-        this.descricaoPost.pop();
+        this.descricaoPost.splice(indice, 1);
       }
     },
-    removerCor() {
-      if (this.corPost) {
-        this.corPost.pop();
+    removerCor(obj) {
+      if (obj) {
+        this.corPost.splice(this.corPost.indexOf(obj), 1);
       }
     },
 
     inclurAtualiza(item, obj) {
-      if (item == this.tamanhoTemp) {
+      if (item == this.tamanhoTemp && this.tamanhoTemp) {
         obj.push(item);
         this.tamanhoTemp = "";
       }
-      if (item == this.corTemp) {
+      if (item == this.corTemp && this.corTemp) {
         obj.push(item);
         this.corTemp = "";
       }
     },
     inclurTamanho(item) {
-      if (this.tamanhoTemp) {
+      if (item) {
         this.tamanhoPost.push({ tamanho: item });
         this.tamanhoTemp = "";
       }
     },
     inclurCor(item) {
-      if (this.corTemp) {
+      if (item) {
         this.corPost.push({ cor: item });
         this.corTemp = "";
       }
@@ -1098,18 +1278,33 @@ export default {
       formData.append("_method", "patch");
       formData.append("title", obj.title);
       formData.append("categoria_id", obj.categoria_id);
-      for (let i = 0; i < obj.tamanho.length; i++) {
-        formData.append("tamanho[]", obj.tamanho[i]);
+      if (!obj.tamanho) {
+        formData.append("tamanho[]", "");
+      } else {
+        if (obj.tamanho.length) {
+          for (let i = 0; i < obj.tamanho.length; i++) {
+            formData.append("tamanho[]", obj.tamanho[i]);
+          }
+        }
       }
-      for (let i = 0; i < obj.cor.length; i++) {
-        formData.append("cor[]", obj.cor[i]);
+      if (!obj.cor) {
+        formData.append("cor[]", "");
+      } else {
+        if (obj.cor.length) {
+          for (let i = 0; i < obj.cor.length; i++) {
+            formData.append("cor[]", obj.cor[i]);
+          }
+        }
       }
-      for (let i = 0; i < obj.descricao.length; i++) {
-        formData.append("descricao[]", obj.descricao[i]);
+      if (!obj.descricao) {
+      } else {
+        if (obj.descricao.length) {
+          for (let i = 0; i < obj.descricao.length; i++) {
+            formData.append("descricao[]", obj.descricao[i]);
+          }
+        }
       }
-      for (let i = 0; i < obj.titulo_descricao.length; i++) {
-        formData.append("titulo_descricao[]", obj.titulo_descricao[i]);
-      }
+
       if (this.imagemPost[0]) {
         formData.append("thumb", this.imagemPost[0]);
       }
@@ -1170,6 +1365,8 @@ export default {
       this.conteudoPost = "";
       this.imagemPost = "";
       this.imagemGaleriaPost = [];
+      this.descricaoTemp = "";
+      descricaoProdu.value = "";
       formFileStoreEvent.value = "";
       formFileStoreThumb.value = "";
       atualizaformProductFile.value = "";
@@ -1182,14 +1379,12 @@ export default {
       formData.append("thumb", this.imagemPost[0]);
       for (let i = 0; i < this.tamanhoPost.length; i++) {
         formData.append("tamanho[]", this.tamanhoPost[i].tamanho);
-        console.log(this.tamanhoPost[i].tamanho, this.tamanhoPost[i]);
       }
       for (let i = 0; i < this.corPost.length; i++) {
         formData.append("cor[]", this.corPost[i].cor);
       }
       for (let i = 0; i < this.descricaoPost.length; i++) {
-        formData.append("descricao[]", this.descricaoPost[i].conteudo);
-        formData.append("titulo_descricao[]", this.descricaoPost[i].titulo);
+        formData.append("descricao[]", this.descricaoPost[i]);
       }
 
       if (this.imagemGaleriaPost) {
