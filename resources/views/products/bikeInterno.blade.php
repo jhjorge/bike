@@ -9,14 +9,16 @@
 
 
 
-    <div class="container my-3 col-9">
+    <div class="container my-3 col-md-10">
         <div class="row m-0">
             <h2 class="title-bike my-5 text-uppercase">{{ $bike->title }}</h5>
         </div>
         <div class="row my-4">
-            <div class="col-md-8 justify-content center d-flex">
-                <img src="{{ asset('storage/' . $bike->thumb) }}" class="img-fluid" alt="">
-            </div>
+            <a class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                <div class="col-md-8 justify-content center d-flex">
+                    <img src="{{ asset('storage/' . $bike->thumb) }}" class="img-fluid" alt="">
+                </div>
+            </a>
         </div>
 
         @isset($bike->gallery)
@@ -26,7 +28,7 @@
 
 
                 @foreach ($bike->gallery as $img)
-                    <div class="col-md-3 col-4 my-2 d-flex justify-content-center">
+                    <div class="col-md-3 col-6 my-2 d-flex justify-content-center">
                         <picture>
                             <a class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <source srcset="" type="image/svg+xml">
@@ -64,133 +66,154 @@
                 Ficha Técnica
             </h2>
         </div>
-        @if ($bike->quadro !== 'null')
+        @if ($bike->quadro != null && $bike->quadro !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Quadro</div>
                 <div class="col ">{{ $bike->quadro }}</div>
 
             </div>
-        @elseif($bike->garfo !== 'null')
+        @endif
+        @if ($bike->garfo != null && $bike->garfo !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Garfo</div>
                 <div class="col ">{{ $bike->garfo }}</div>
 
             </div>
-        @elseif($bike->movimentoDirecao !== 'null')
+        @endif
+        @if ($bike->movimentoDirecao != null && $bike->movimentoDirecao !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Movimento de Direção</div>
                 <div class="col ">{{ $bike->movimentoDirecao }}</div>
 
             </div>
-        @elseif($bike->guidao !== 'null')
+        @endif
+        @if ($bike->guidao != null && $bike->guidao !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Guidão</div>
                 <div class="col ">{{ $bike->guidao }}</div>
 
             </div>
-        @elseif($bike->manopla !== 'null')
+        @endif
+        @if ($bike->manopla != null && $bike->manopla !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Manopla</div>
                 <div class="col ">{{ $bike->manopla }}</div>
 
             </div>
-        @elseif($bike->freio !== 'null')
+        @endif
+        @if ($bike->freio != null && $bike->freio !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Freio</div>
                 <div class="col ">{{ $bike->freio }}</div>
 
             </div>
-        @elseif($bike->aro !== 'null')
+        @endif
+        @if ($bike->aro != null && $bike->aro !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Aro/Raio</div>
                 <div class="col ">{{ $bike->aro }}</div>
 
             </div>
-        @elseif($bike->cubo !== 'null')
+        @endif
+        @if ($bike->cubo != null && $bike->cubo !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Cubo</div>
                 <div class="col ">{{ $bike->cubo }}</div>
 
             </div>
-        @elseif($bike->pneu !== 'null')
+        @endif
+        @if ($bike->pneu != null && $bike->pneu !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Pneu/Câmara de Ar</div>
                 <div class="col ">{{ $bike->pneu }}</div>
 
             </div>
-        @elseif($bike->pedivela !== 'null')
+        @endif
+        @if ($bike->pedivela != null && $bike->pedivela !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Pedivela</div>
                 <div class="col ">{{ $bike->pedivela }}</div>
 
             </div>
-        @elseif($bike->corrente !== 'null')
+        @endif
+        @if ($bike->corrente != null && $bike->corrente !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Corrente</div>
                 <div class="col ">{{ $bike->corrente }}</div>
 
             </div>
-        @elseif($bike->movimentoCentral !== 'null')
+        @endif
+        @if ($bike->movimentoCentral != null && $bike->movimentoCentral !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Movimento Central</div>
                 <div class="col ">{{ $bike->movimentoCentral }}</div>
 
             </div>
-        @elseif($bike->rodaLivre !== 'null')
+        @endif
+        @if ($bike->rodaLivre != null && $bike->rodaLivre !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Roda Livre</div>
                 <div class="col ">{{ $bike->rodaLivre }}</div>
 
             </div>
-        @elseif($bike->cambioDianteiro !== 'null')
+        @endif
+        @if ($bike->cambioDianteiro != null && $bike->cambioDianteiro !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Câmbio Dianteiro</div>
                 <div class="col ">{{ $bike->cambioDianteiro }}</div>
 
             </div>
-        @elseif($bike->cambioTraseiro !== 'null')
+        @endif
+        @if ($bike->cambioTraseiro != null && $bike->cambioTraseiro !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Câmbio Traseiro</div>
                 <div class="col ">{{ $bike->cambioTraseiro }}</div>
 
             </div>
-        @elseif($bike->manete !== 'null')
+        @endif
+        @if ($bike->manete != null && $bike->manete !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Manete/Alavanca</div>
                 <div class="col ">{{ $bike->manete }}</div>
 
             </div>
-        @elseif($bike->selim !== 'null')
+        @endif
+        @if ($bike->selim != null && $bike->selim !== 'null')
             <div class="row my-4 text-width-bold">
-                <div class="col h3">selim</div>
+                <div class="col h3">Selim</div>
                 <div class="col ">{{ $bike->selim }}</div>
 
             </div>
-        @elseif($bike->canote !== 'null')
+        @endif
+        @if ($bike->canote != null && $bike->canote !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Canote</div>
                 <div class="col ">{{ $bike->canote }}</div>
 
             </div>
-        @elseif($bike->abracadeira !== 'null')
+        @endif
+        @if ($bike->abracadeira != null && $bike->abracadeira !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Abraçadeira</div>
                 <div class="col ">{{ $bike->abracadeira }}</div>
 
             </div>
-        @elseif($bike->pedal !== 'null')
+        @endif
+        @if ($bike->pedal != null && $bike->pedal !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Pedal</div>
                 <div class="col ">{{ $bike->pedal }}</div>
 
             </div>
-        @elseif($bike->peso !== 'null')
+        @endif
+        @if ($bike->peso != null && $bike->peso !== 'null')
             <div class="row my-4 text-width-bold">
                 <div class="col h3">Peso</div>
                 <div class="col ">{{ $bike->peso }}</div>
 
             </div>
-        @elseif($bike->observacao !== 'null')
+        @endif
+        @if ($bike->observacao != null && $bike->observacao !== 'null')
             <div class="row my-4 pb-5 text-width-bold">
                 <div class="col h3">Observação</div>
                 <div class="col ">{!! $bike->observacao !!}</div>
@@ -245,6 +268,19 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
+            </div>
+        </div>
+    </div> <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="{{ asset('storage/' . $bike->thumb) }}" class="d-block w-100" alt="...">
+                </div>
+
             </div>
         </div>
     </div>

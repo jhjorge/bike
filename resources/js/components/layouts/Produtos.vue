@@ -174,6 +174,7 @@
           </div>
           <QuillEditor
             theme="snow"
+            ref="myEditor6"
             toolbar="essential"
             v-model:content="descricaoTemp"
             contentType="html"
@@ -1144,7 +1145,7 @@ export default {
         );
         this.tituloTemp = "";
         this.descricaoTemp = "";
-        this.clearField;
+        this.resetContent();
         this.msg = !this.msg;
         setTimeout(() => {
           this.msg = false;
@@ -1161,7 +1162,7 @@ export default {
         obj.push(JSON.stringify({ titulo: title, conteudo: descri }));
         this.tituloTemp = "";
         this.descricaoTemp = "";
-        this.clearField;
+        this.resetContent();
         this.msg = !this.msg;
         setTimeout(() => {
           this.msg = false;
@@ -1173,6 +1174,10 @@ export default {
         }, 2000);
       }
     },
+    resetContent() {
+      this.$refs.myEditor6.setHTML("");
+    },
+
     removerAtualiza2(obj1, obj2) {
       if (obj1) {
         obj1.splice(obj2, 1);
@@ -1366,6 +1371,7 @@ export default {
       this.imagemPost = "";
       this.imagemGaleriaPost = [];
       this.descricaoTemp = "";
+      this.resetContent();
       descricaoProdu.value = "";
       formFileStoreEvent.value = "";
       formFileStoreThumb.value = "";
@@ -1468,6 +1474,7 @@ export default {
           this.urlFiltro = "";
         })
         .finally(() => (this.loading = false));
+      this.clearField();
     },
     carregarImg(e) {
       if (e.target.files) {

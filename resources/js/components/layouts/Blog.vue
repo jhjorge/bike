@@ -32,6 +32,7 @@
           >
           <QuillEditor
             theme="snow"
+            ref="myEditor4"
             toolbar="full"
             v-model:content="conteudoPost"
             contentType="html"
@@ -517,6 +518,9 @@ export default {
       this.busca.id = "";
       this.busca.title = "";
     },
+    resetContent() {
+      this.$refs.myEditor4.setHTML("");
+    },
 
     page(link) {
       if (link.url) {
@@ -576,6 +580,7 @@ export default {
       this.tituloPost = null;
       this.conteudoPost = null;
       formFileStore.value = "";
+      this.resetContent();
     },
     salvar() {
       let formData = new FormData();
@@ -658,6 +663,7 @@ export default {
           this.urlPosts = "https://goodnine.com.br/api/posts";
         })
         .finally(() => (this.loading = false));
+      this.clearField();
     },
     carregarImg(e) {
       this.imagemPost = e.target.files;

@@ -34,7 +34,6 @@
         </div>
         <div class="mb-3">
           <label class="form-label" for="meeting-time">Data do evento</label>
-          {{ dataPost }}
 
           <input
             v-model="dataPost"
@@ -60,6 +59,7 @@
           <label for="conteudoPostModal" class="form-label">Conteudo </label>
           <QuillEditor
             theme="snow"
+            ref="myEditor5"
             toolbar="full"
             v-model:content="conteudoPost"
             contentType="html"
@@ -738,6 +738,9 @@ export default {
           this.fetchDetails = !true;
         });
     },
+    resetContent() {
+      this.$refs.myEditor5.setHTML("");
+    },
 
     spinnerButton() {
       this.loader = !false;
@@ -756,6 +759,7 @@ export default {
       formFileStoreThumb.value = "";
       atualizaformFile.value = "";
       formFileStoreEventEdit.value = "";
+      this.resetContent();
     },
     salvar() {
       let formData = new FormData();
@@ -847,6 +851,7 @@ export default {
           this.urlFiltro = "";
         })
         .finally(() => (this.loading = false));
+      this.clearField();
     },
     carregarImg(e) {
       if (e.target.files) {

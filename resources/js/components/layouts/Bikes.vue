@@ -261,11 +261,12 @@
           <label class="form-label" for="observacaoBike">Obeservação</label>
           <QuillEditor
             theme="snow"
+            ref="myEditor3"
             debug="info"
             toolbar="essential"
             v-model:content="observacaoBike"
             contentType="html"
-            id="observacaoBike"
+            id="observacaoBikeNew"
           />
         </div>
         <div class="mb-3">
@@ -273,10 +274,11 @@
 
           <QuillEditor
             theme="snow"
+            ref="myEditor2"
             toolbar="essential"
             v-model:content="conteudoPost"
             contentType="html"
-            id="apresentacaoModal"
+            id="conteudoBikeNew"
           />
         </div>
 
@@ -284,21 +286,22 @@
           <label for="conteudoPostModal" class="form-label">Descrição</label>
           <QuillEditor
             theme="snow"
+            ref="myEditor"
             toolbar="essential"
             v-model:content="descricaoBike"
             contentType="html"
-            id="conteudoPostModalThumb"
+            id="descricaoBikeNew"
           />
         </div>
         <div class="mb-3">
-          <label for="formFileStore" class="form-label"
+          <label for="formFileStoreThumb" class="form-label"
             >Imagem de Destaque</label
           >
           <input @change="carregarImg($event)" class="form-control"
           accept=”image/*” type="file" id="formFileStoreThumb" />
         </div>
         <div class="mb-3">
-          <label for="formFileBanner" class="form-label">Banner</label>
+          <label for="formFileStoreBanner" class="form-label">Banner</label>
           <input @change="carregarImgBanner($event)" class="form-control"
           accept=”image/*” type="file" id="formFileStoreBanner" />
         </div>
@@ -646,7 +649,7 @@
             toolbar="essential"
             v-model:content="objInfo.observacao"
             contentType="html"
-            id="apresentacaoModal"
+            id="observacaoBikeAtu"
           />
         </div>
         <div class="mb-3">
@@ -657,7 +660,7 @@
             toolbar="essential"
             v-model:content="objInfo.content"
             contentType="html"
-            id="apresentacaoModal"
+            id="conteudoBikeAtu"
           />
         </div>
 
@@ -670,7 +673,7 @@
             toolbar="essential"
             v-model:content="objInfo.descricao"
             contentType="html"
-            id="apresentacaoModal"
+            id="descricaoBikeAtu"
           />
         </div>
 
@@ -1771,6 +1774,12 @@ export default {
         this.loader = !true;
       }, 2000);
     },
+    resetContent() {
+      this.$refs.myEditor.setHTML("");
+      this.$refs.myEditor2.setHTML("");
+      this.$refs.myEditor3.setHTML("");
+    },
+
     clearField() {
       this.tituloPost = "";
       this.quadroBike = "";
@@ -1794,16 +1803,23 @@ export default {
       this.abracadeiraBike = "";
       this.pedalBike = "";
       this.pesoBike = "";
-      this.observacaoBike = "";
-      this.descricaoBike = "";
-      this.conteudoPost = "";
+      this.observacaoBike = [""];
+      this.descricaoBike = [""];
+      this.conteudoPost = [""];
       this.imagemPost = "";
       this.bannerPost = "";
       this.imagemGaleriaPost = [];
+      this.resetContent();
+
+      descricaoBikeNew.value = "";
+      conteudoBikeNew.value = "";
+      observacaoBikeNew.value = "";
       formFileStoreBannerEdit.value = "";
+
       formFileStoreBanner.value = "";
       formFileStoreEvent.value = "";
       formFileStoreThumb.value = "";
+
       atualizaformFile.value = "";
       formFileStoreEventEdit.value = "";
     },
@@ -1859,7 +1875,6 @@ export default {
             this.fetchDetails = response;
             this.clearField();
             this.loadList();
-            console.log(response);
           }, 2000);
           this.fetchStatus = !true;
           this.fetchDetails = !true;
@@ -1868,7 +1883,6 @@ export default {
           setTimeout(() => {
             this.fetchStatus = "erro";
             this.fetchDetails = erros.response;
-            console.log(erros.response);
           }, 200);
           this.fetchStatus = null;
           this.fetchDetails = null;
@@ -1907,6 +1921,7 @@ export default {
       this.loading = !this.loading;
 
       let url = this.urlPosts + "?" + this.urlPaginacao + this.urlFiltro;
+      this.clearField();
 
       axios
         .get(url)
